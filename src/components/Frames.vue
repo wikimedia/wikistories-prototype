@@ -4,7 +4,7 @@
                 v-for="frame in thumbnails"
                 :key="frame.id"
                 class="frame"
-                :class="{selected: frame.selected}"
+                :class="{'selected-frame': frame.selected}"
                 :style="frame.style"
                 @click="selectFrame(frame.id)" />
         <div class="frame btn-add-frame" @click="addFrame">+</div>
@@ -39,7 +39,7 @@
         border: dotted black 2px;
         font-size: 24px;
     }
-    .selected {
+    .selected-frame {
         outline: blue double 4px;
     }
 

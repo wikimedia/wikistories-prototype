@@ -37,7 +37,6 @@
 </script>
 <style>
     .search-wp {
-        height: 100%;
         overflow: scroll;
     }
 </style>
