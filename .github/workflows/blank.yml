@@ -32,14 +32,13 @@ jobs:
           npm run lint
           npm run build
 
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
+      - name: Get branch name
+          id: branch-name
+          uses: tj-actions/branch-names@v5
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: dist
-          target-folder: ${{ steps.extract_branch.outputs.branch }}
+          target-folder: ${{ steps.branch-name.outputs.current_branch }}"
