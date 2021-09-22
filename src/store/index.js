@@ -117,7 +117,8 @@ export default new Vuex.Store({
       const f = story.frames.find(f => f.id === story.currentFrameId)
       return {
         text: f.text,
-        style: makeFrameStyle(f)
+        style: makeFrameStyle(f),
+        noImage: f.img === ''
       }
     },
     searchResults: ({ search }) => search.results,
