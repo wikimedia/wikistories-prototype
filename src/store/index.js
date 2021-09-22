@@ -22,17 +22,17 @@ export default new Vuex.Store({
       frames: [
         {
           id: 1,
-          img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Bandhavgarh_Tigers.jpg/320px-Bandhavgarh_Tigers.jpg',
+          img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Bandhavgarh_Tigers.jpg/640px-Bandhavgarh_Tigers.jpg',
           text: 'Bandhavgarh Tigers'
         },
         {
           id: 2,
-          img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/White_Tiger_in_Touroparc.jpg/320px-White_Tiger_in_Touroparc.jpg',
+          img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/White_Tiger_in_Touroparc.jpg/640px-White_Tiger_in_Touroparc.jpg',
           text: 'White Tiger in Touroparc'
         },
         {
           id: 3,
-          img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/TigerVector.png/320px-TigerVector.png',
+          img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/TigerVector.png/640px-TigerVector.png',
           text: 'Taken from the Coat of arms of Vladivostok and modified.'
         }
       ]
