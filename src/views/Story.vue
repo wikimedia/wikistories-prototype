@@ -5,8 +5,8 @@
 </div>
 </template>
 <script>
-import CurrentFrame from '../components/CurrentFrame.vue'
-import Frames from '../components/Frames.vue'
+import CurrentFrame from '@components/CurrentFrame.vue'
+import Frames from '@components/Frames.vue'
 
 export default {
   name: 'Story',
