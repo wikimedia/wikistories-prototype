@@ -4,7 +4,7 @@
 <script>
     import { mapGetters, mapActions } from 'vuex'
     export default {
-      name: 'BrowseArticle',
+      name: 'Article',
       props: ['article'],
       computed: mapGetters(['currentArticle']),
       methods: {
@@ -23,6 +23,7 @@
 <style>
     .article {
         overflow: scroll;
+        padding: 32px 16px 0 16px;
     }
     p {
         cursor: pointer;

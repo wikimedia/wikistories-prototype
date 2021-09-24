@@ -7,7 +7,7 @@
         </form>
         <div class="results">
             <div class="result" v-for="result in searchResults" :key="result.title">
-                <router-link :to="{ name: 'BrowseArticle', params: { article: result.title } }">
+                <router-link :to="{ name: 'Article', params: { article: result.title } }">
                     <img :src="result.thumb" />
                     <div>{{result.title}}</div>
                     <div>{{result.desc}}</div>
