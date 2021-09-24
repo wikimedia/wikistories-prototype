@@ -1,8 +1,8 @@
 <template>
   <div class="view home">
     <div class="center">
-      <b>Welcome to Wikistories</b>
-      <router-link to="/story" class="create-story">Create a story</router-link>
+      <b>{{ $i18n('welcome') }}</b>
+      <router-link to="/story" class="create-story">{{ $i18n('btn-create') }}</router-link>
     </div>
   </div>
 </template>
