@@ -13,7 +13,8 @@ export default {
         return {
           title: p.title,
           desc: p.description,
-          thumb: p.thumbnail && p.thumbnail.source
+          thumb: p.thumbnail && p.thumbnail.source,
+          goto: { name: 'BrowseArticle', params: { article: p.title } }
         }
       }))
     }

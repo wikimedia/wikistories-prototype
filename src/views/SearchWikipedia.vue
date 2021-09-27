@@ -5,23 +5,15 @@
             <input class="query" type="text" :placeholder="[[ $i18n('search-box') ]]" v-model="query"/>
             <input class="submit" type="submit" :value="[[ $i18n('search-text') ]]"/>
         </form>
-        <div class="results">
-            <div class="result" v-for="result in searchResults" :key="result.title">
-                <router-link :to="{ name: 'BrowseArticle', params: { article: result.title } }">
-                  <div class="img" :style="{backgroundImage: `url(${result.thumb})` }"/>
-                  <div class="info">
-                    <div class="title">{{result.title}}</div>
-                    <div class="description">{{result.desc}}</div>
-                  </div>
-                </router-link>
-            </div>
-        </div>
+        <listView :items="searchResults"/>
     </div>
 </template>
 <script>
     import { mapActions, mapGetters } from 'vuex'
+    import ListView from '@components/ListView.vue'
     export default {
       name: 'SearchWikipedia',
+      components: { ListView },
       data: () => {
         return {
           query: ''
@@ -40,8 +32,10 @@
 <style>
     .search-wp {
         font-family: Helvetica Neue;
-        position: absolute;
         padding: 0 22px;
+    }
+    .search-wp form {
+      text-align: left;
     }
     .search-wp .label {
       font-size: 18px;
@@ -49,7 +43,6 @@
       font-weight: bold;
       line-height: 25px;
       letter-spacing: 0px;
-      text-align: left;
       margin: 5px 0;
     }
     .search-wp .query {
@@ -57,6 +50,7 @@
       border: 2px solid #3366CC;
       box-sizing: border-box;
       border-radius: 2px;
+      max-width: 70%;
     }
     .search-wp .submit {
       width: 78px;
@@ -70,63 +64,4 @@
       order: 0;
       flex-grow: 0;
     }
-    .search-wp .results {
-          width: 100%;
-          background-color: #fff;
-          text-align: left;
-          overflow: hidden;
-          position: absolute;
-    }
-    .search-wp .results .result {
-          width: 100%;
-          height: 60px;
-          margin: 0;
-          padding: 2.5px 0;
-          display: flex;
-          justify-content: space-between;
-          text-align: left;
-    }
-
-    .search-wp .results .result a {
-          all: inherit;
-          padding: 0;
-    }
-
-    .search-wp .results .result .img {
-            min-width: 60px;
-            height: 100%;
-            display: flex;
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: cover;
-            background-color: #C4C4C4;
-    }
-    
-    .search-wp .results .result .info {
-            height: 100%;
-            overflow: hidden;
-            display: flex;
-            flex: auto;
-            flex-direction: column;
-            justify-content: center;
-            padding-left: 10px;
-    }
-
-    .search-wp .results .result .info .title {
-              font-size: 15px;
-              font-weight: 700;
-              color: #000;
-              white-space: nowrap;
-              text-overflow: ellipsis;
-              overflow: hidden;
-            }
-
-    .search-wp .results .result .info .description {
-              font-size: 13px;
-              font-weight: 400;
-              color: #54595D;
-              white-space: nowrap;
-              text-overflow: ellipsis;
-              overflow: hidden;
-            }
 </style>
