@@ -7,12 +7,13 @@
         </form>
         <div class="results">
             <div class="result" v-for="result in searchResults" :key="result.title">
-                <!-- <router-link :to="{ name: 'BrowseArticle', params: { article: result.title } }"/> -->
-                <div class="img" :style="{backgroundImage: `url(${result.thumb})` }"/>
-                <div class="info">
-                  <div class="title">{{result.title}}</div>
-                  <div class="description">{{result.desc}}</div>
-                </div>
+                <router-link :to="{ name: 'BrowseArticle', params: { article: result.title } }">
+                  <div class="img" :style="{backgroundImage: `url(${result.thumb})` }"/>
+                  <div class="info">
+                    <div class="title">{{result.title}}</div>
+                    <div class="description">{{result.desc}}</div>
+                  </div>
+                </router-link>
             </div>
         </div>
     </div>
@@ -45,33 +46,39 @@
           width: 100%;
           background-color: #fff;
           text-align: left;
-          overflow: scroll;
+          overflow: hidden;
           position: absolute;
     }
     .search-wp .results .result {
           width: 100%;
           height: 60px;
           margin: 0;
-          padding: 6px 10px;
+          padding: 2.5px 10px;
           display: flex;
           justify-content: space-between;
           text-align: left;
     }
 
+    .search-wp .results .result a {
+          all: inherit;
+          padding: 0;
+    }
+
     .search-wp .results .result .img {
+            width: 60px;
             height: 100%;
             display: flex;
-            flex: auto;
             background-repeat: no-repeat;
             background-position: center center;
-            border-radius: 4px;
+            background-size: cover;
+            background-color: #C4C4C4;
     }
     
     .search-wp .results .result .info {
             height: 100%;
             overflow: hidden;
             display: flex;
-            flex: calc( 100vw - 96px );
+            flex: auto;
             flex-direction: column;
             justify-content: center;
             padding-left: 10px;
