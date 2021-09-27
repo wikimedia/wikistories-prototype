@@ -1,9 +1,9 @@
 <template>
     <div class="view search-wp">
         <form @submit="onSubmit($event, query)">
-            <h3 class="label">Search Wikipedia</h3>
-            <input type="text" placeholder="Search Wikipedia" v-model="query"/>
-            <input type="submit" />
+            <div class="label">{{ $i18n('search-box') }}</div>
+            <input class="query" type="text" :placeholder="[[ $i18n('search-box') ]]" v-model="query"/>
+            <input class="submit" type="submit" :value="[[ $i18n('search-text') ]]"/>
         </form>
         <div class="results">
             <div class="result" v-for="result in searchResults" :key="result.title">
@@ -40,7 +40,35 @@
 <style>
     .search-wp {
         font-family: Helvetica Neue;
-        overflow: scroll;
+        position: absolute;
+        padding: 0 22px;
+    }
+    .search-wp .label {
+      font-size: 18px;
+      font-style: normal;
+      font-weight: bold;
+      line-height: 25px;
+      letter-spacing: 0px;
+      text-align: left;
+      margin: 5px 0;
+    }
+    .search-wp .query {
+      height: 36px;
+      border: 2px solid #3366CC;
+      box-sizing: border-box;
+      border-radius: 2px;
+    }
+    .search-wp .submit {
+      width: 78px;
+      height: 36px;
+      font-weight: bold;
+      font-size: 16px;
+      color: #fff;
+      background: #2A4B8D;
+      border-radius: 0px 2px 2px 0px;
+      flex: none;
+      order: 0;
+      flex-grow: 0;
     }
     .search-wp .results {
           width: 100%;
@@ -53,7 +81,7 @@
           width: 100%;
           height: 60px;
           margin: 0;
-          padding: 2.5px 10px;
+          padding: 2.5px 0;
           display: flex;
           justify-content: space-between;
           text-align: left;
@@ -65,7 +93,7 @@
     }
 
     .search-wp .results .result .img {
-            width: 60px;
+            min-width: 60px;
             height: 100%;
             display: flex;
             background-repeat: no-repeat;
