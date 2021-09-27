@@ -5,7 +5,7 @@
             <input class="query" type="text" :placeholder="[[ $i18n('search-box') ]]" v-model="query"/>
             <input class="submit" type="submit" :value="[[ $i18n('search-text') ]]"/>
         </form>
-        <listView :items="searchResults"/>
+        <ListView :items="searchResults"/>
     </div>
 </template>
 <script>
