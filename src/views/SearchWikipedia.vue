@@ -6,7 +6,7 @@
             <input class="query" type="text" :placeholder="[[ $i18n('search-box') ]]" v-model="query" required/>
             <input class="submit" type="submit" :value="[[ $i18n('search-text') ]]"/>
             <div class="icon"/>
-            <div v-if="query" class="close"  v-on:click="onClear"/>
+            <div v-if="query" class="close" @click="onClear"/>
         </form>
         <ListView :items="searchResults"/>
     </div>
@@ -23,7 +23,7 @@
         }
       },
       methods: {
-        ...mapActions(['search']),
+        ...mapActions(['search','clear']),
         onSubmit: function(e) {
           const queryString = this.query.trim()
           e.preventDefault()
@@ -32,6 +32,7 @@
         onClear: function(e) {
           e.preventDefault();
           this.query = '';
+          this.clear();
         }
       },
       computed: mapGetters(['searchResults'])

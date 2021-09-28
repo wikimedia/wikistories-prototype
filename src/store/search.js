@@ -17,6 +17,9 @@ export default {
           goto: { name: 'BrowseArticle', params: { article: p.title } }
         }
       }))
+    },
+    clear: ({commit}) => {
+      commit('setSearchResults', []);
     }
   },
   getters: {
