@@ -14,27 +14,46 @@
       props: ['article'],
       computed: mapGetters(['currentArticle']),
       methods: {
-        ...mapActions(['fetchArticle', 'setText']),
+        ...mapActions(['fetchArticle', 'setText', 'setImg']),
         onBack: function() {
           this.$router.go(-1)
         },
         onConfirm: function() {
-          const selected = document.querySelector('.selected-text')
-          if (selected) {
-            const text = selected.innerText
-            if (text) {
-              this.setText( selected.innerText )
+          const selectedText = document.querySelector('.selected-text')
+          const text = selectedText && selectedText.innerText
+
+          const selectedImage = document.querySelector('.selected-image')
+          const imageSrc = selectedImage && selectedImage.src
+
+            if (text && imageSrc) {
+              this.setText(text)
+              this.setImg(imageSrc)
               this.$router.push( { name: 'Story' } )
             }
-          }
         },
         onClick: function(e) {
           e.preventDefault()
-          const selected = document.querySelector('.selected-text')
-          if (selected) {
-            selected.classList.remove('selected-text')
+          if (e.target.tagName === 'IMG') {
+            const selectedImage = document.querySelector('.selected-image')
+            if (selectedImage) {
+              selectedImage.classList.remove('selected-image')
+              if (selectedImage !== e.target) {
+                e.target.classList.add('selected-image')
+              }
+            } else {
+              e.target.classList.add('selected-image')
+            }
+          } else {
+            const selectedText = document.querySelector( '.selected-text' )
+            if ( selectedText ) {
+              selectedText.classList.remove( 'selected-text' )
+              if (selectedText !== e.target) {
+                e.target.classList.add('selected-text')
+              }
+            } else {
+              e.target.classList.add( 'selected-text' )
+            }
           }
-          e.target.classList.add('selected-text')
         }
       },
       created: function () {
@@ -82,5 +101,8 @@
     }
     .selected-text {
         background-color: yellow;
+    }
+    .selected-image {
+        outline: dashed yellow 10px;
     }
 </style>

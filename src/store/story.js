@@ -44,6 +44,10 @@ export default {
     setText: (state, text) => {
       const f = state.frames.find(f => f.id === state.currentFrameId)
       f.text = text
+    },
+    setImg: (state, img) => {
+      const f = state.frames.find(f => f.id === state.currentFrameId)
+      f.img = img
     }
   },
   actions: {
@@ -55,7 +59,10 @@ export default {
     },
     setText: ({commit}, text) => {
       commit('setText', text)
-}
+    },
+    setImg: ({commit}, img) => {
+      commit('setImg', img)
+    }
   },
   getters: {
     thumbnails: (state) => {
