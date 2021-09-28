@@ -1,6 +1,7 @@
 <template>
     <div class="view search-wp">
         <form @submit="onSubmit">
+            <router-link to='Story'><div class="back"/></router-link>
             <div class="label">{{ $i18n('search-box') }}</div>
             <input class="query" type="text" :placeholder="[[ $i18n('search-box') ]]" v-model="query" required/>
             <input class="submit" type="submit" :value="[[ $i18n('search-text') ]]"/>
@@ -41,13 +42,20 @@
         font-family: Helvetica Neue;
         padding: 0 22px;
     }
+    .search-wp .back {
+      background-image: url(../images/back.svg);
+      width: 16px;
+			height: 16px;
+      margin: 20px 0;
+      cursor: pointer;
+    }
     .search-wp form {
       position: relative;
       text-align: left;
       padding: 10px 0;
     }
     .search-wp .listview {
-      max-height: calc( 100vh - 91px );
+      max-height: calc( 100vh - 147px );
       overflow: scroll;
     }
     .search-wp .label {
@@ -80,6 +88,7 @@
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
+      cursor: pointer;
     }
     .search-wp .icon {
       background-image: url(../images/search.svg);
@@ -97,5 +106,6 @@
 			bottom: 18px;
 			right: 83px;
 			padding: 0;
+      cursor: pointer;
     }
 </style>
