@@ -39,6 +39,11 @@
     .listview .item a {
           all: inherit;
           padding: 0;
+          cursor: pointer;
+    }
+
+    .listview .item a:hover {
+        background-color: #C4C4C4;
     }
 
     .listview .item .img {

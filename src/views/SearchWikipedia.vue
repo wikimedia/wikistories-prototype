@@ -1,6 +1,6 @@
 <template>
     <div class="view search-wp">
-        <form @submit="onSubmit($event, query)">
+        <form @submit="onSubmit">
             <div class="label">{{ $i18n('search-box') }}</div>
             <input class="query" type="text" :placeholder="[[ $i18n('search-box') ]]" v-model="query"/>
             <input class="submit" type="submit" :value="[[ $i18n('search-text') ]]"/>
@@ -21,9 +21,10 @@
       },
       methods: {
         ...mapActions(['search']),
-        onSubmit: function(e, query) {
+        onSubmit: function(e) {
+          const queryString = this.query.trim()
           e.preventDefault()
-          this.search(query)
+          this.search(queryString)
         }
       },
       computed: mapGetters(['searchResults'])
@@ -36,6 +37,7 @@
     }
     .search-wp form {
       text-align: left;
+      padding: 10px 0;
     }
     .search-wp .label {
       font-size: 18px;
@@ -50,7 +52,7 @@
       border: 2px solid #3366CC;
       box-sizing: border-box;
       border-radius: 2px;
-      max-width: 70%;
+      width: 100%;
     }
     .search-wp .submit {
       width: 78px;
@@ -60,8 +62,11 @@
       color: #fff;
       background: #2A4B8D;
       border-radius: 0px 2px 2px 0px;
-      flex: none;
-      order: 0;
-      flex-grow: 0;
+      position: absolute;
+      margin-left: -78px;
+      text-align: center;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
     }
 </style>
