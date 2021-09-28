@@ -8,12 +8,11 @@ export default {
     setSearchResults: (state, results) => state.results = results,
   },
   actions: {
-    update: ({commit}, e) => {
-      commit('setQuery', e.target.value)
-    },
-    search: async ({commit, state}) => {
-      const url = "https://en.wikipedia.org/w/api.php?action=query&generator=prefixsearch&prop=description|pageimages|pageprops&piprop=thumbnail&ppprop=displaytitle&redirects=false&pithumbsize=64&gpslimit=10&gpsnamespace=0&format=json&formatversion=2&origin=*&gpssearch=" + state.query
+    search: async ({commit}, query) => {
+      commit('setQuery', query) // commit query before fetch event
+      const url = "https://en.wikipedia.org/w/api.php?action=query&generator=prefixsearch&prop=description|pageimages|pageprops&piprop=thumbnail&ppprop=displaytitle&redirects=false&pithumbsize=64&gpslimit=10&gpsnamespace=0&format=json&formatversion=2&origin=*&gpssearch=" + query
       const response = await (await fetch(url)).json()
+      response.query.pages.sort( ( a, b ) => a.index - b.index );
       commit('setSearchResults', Object.values(response.query.pages).map(p => {
         return {
           title: p.title,

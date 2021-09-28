@@ -1,10 +1,9 @@
 <template>
     <div class="view search-wp">
-        <form @submit="onSubmit">
+        <form>
             <router-link to='Story'><div class="back"/></router-link>
             <div class="label">{{ $i18n('search-box') }}</div>
-            <input class="query" type="text" :placeholder="[[ $i18n('search-box') ]]" :value="query" @input="update" required/>
-            <input class="submit" type="submit" :value="[[ $i18n('search-text') ]]"/>
+            <input class="query" type="text" :placeholder="[[ $i18n('search-box') ]]" :value="query" @input="onInput" required/>
             <div class="icon"/>
             <div v-if="query" class="close" @click="onClear"/>
         </form>
@@ -18,10 +17,10 @@
       name: 'SearchWikipedia',
       components: { ListView },
       methods: {
-        ...mapActions(['update', 'search', 'clear']),
-        onSubmit: function(e) {
+        ...mapActions(['search', 'clear']),
+        onInput: function(e) {
           e.preventDefault()
-          this.search()
+          this.search(e.target.value)
         },
         onClear: function(e) {
           e.preventDefault();
@@ -68,22 +67,6 @@
       padding-left: 35px;
       width: 100%;
     }
-    .search-wp .submit {
-      width: 78px;
-      height: 36px;
-      font-weight: bold;
-      font-size: 16px;
-      color: #fff;
-      background: #2A4B8D;
-      border-radius: 0px 2px 2px 0px;
-      position: absolute;
-      margin-left: -78px;
-      text-align: center;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      cursor: pointer;
-    }
     .search-wp .icon {
       background-image: url(../images/search.svg);
       width: 20px;
@@ -98,7 +81,7 @@
 			height: 20px;
 			position: absolute;
 			bottom: 18px;
-			right: 83px;
+			right: 10px;
 			padding: 0;
       cursor: pointer;
     }
