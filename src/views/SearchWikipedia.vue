@@ -3,7 +3,7 @@
         <form @submit="onSubmit">
             <router-link to='Story'><div class="back"/></router-link>
             <div class="label">{{ $i18n('search-box') }}</div>
-            <input class="query" type="text" :placeholder="[[ $i18n('search-box') ]]" v-model="query" required/>
+            <input class="query" type="text" :placeholder="[[ $i18n('search-box') ]]" :value="query" @input="update" required/>
             <input class="submit" type="submit" :value="[[ $i18n('search-text') ]]"/>
             <div class="icon"/>
             <div v-if="query" class="close" @click="onClear"/>
@@ -17,25 +17,18 @@
     export default {
       name: 'SearchWikipedia',
       components: { ListView },
-      data: () => {
-        return {
-          query: ''
-        }
-      },
       methods: {
-        ...mapActions(['search','clear']),
+        ...mapActions(['update', 'search', 'clear']),
         onSubmit: function(e) {
-          const queryString = this.query.trim()
           e.preventDefault()
-          this.search(queryString)
+          this.search()
         },
         onClear: function(e) {
           e.preventDefault();
-          this.query = '';
           this.clear();
         }
       },
-      computed: mapGetters(['searchResults'])
+      computed: mapGetters(['searchResults', 'query'])
     }
 </script>
 <style>
