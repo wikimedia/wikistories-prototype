@@ -2,7 +2,7 @@
     <div class="view search-wp">
         <form @submit="onSubmit">
             <div class="label">{{ $i18n('search-box') }}</div>
-            <input class="query" type="text" :placeholder="[[ $i18n('search-box') ]]" v-model="query"/>
+            <input class="query" type="text" :placeholder="[[ $i18n('search-box') ]]" v-model="query" required/>
             <input class="submit" type="submit" :value="[[ $i18n('search-text') ]]"/>
             <div class="icon"/>
             <div v-if="query" class="close"  v-on:click="onClear"/>
