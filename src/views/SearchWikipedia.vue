@@ -46,6 +46,10 @@
       text-align: left;
       padding: 10px 0;
     }
+    .search-wp .listview {
+      max-height: calc( 100vh - 91px );
+      overflow: scroll;
+    }
     .search-wp .label {
       font-size: 18px;
       font-style: normal;
