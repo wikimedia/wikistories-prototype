@@ -4,6 +4,8 @@
             <div class="label">{{ $i18n('search-box') }}</div>
             <input class="query" type="text" :placeholder="[[ $i18n('search-box') ]]" v-model="query"/>
             <input class="submit" type="submit" :value="[[ $i18n('search-text') ]]"/>
+            <div class="icon"/>
+            <div v-if="query" class="close"  v-on:click="onClear"/>
         </form>
         <ListView :items="searchResults"/>
     </div>
@@ -25,6 +27,10 @@
           const queryString = this.query.trim()
           e.preventDefault()
           this.search(queryString)
+        },
+        onClear: function(e) {
+          e.preventDefault();
+          this.query = '';
         }
       },
       computed: mapGetters(['searchResults'])
@@ -36,6 +42,7 @@
         padding: 0 22px;
     }
     .search-wp form {
+      position: relative;
       text-align: left;
       padding: 10px 0;
     }
@@ -52,6 +59,7 @@
       border: 2px solid #3366CC;
       box-sizing: border-box;
       border-radius: 2px;
+      padding-left: 35px;
       width: 100%;
     }
     .search-wp .submit {
@@ -68,5 +76,22 @@
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
+    }
+    .search-wp .icon {
+      background-image: url(../images/search.svg);
+      width: 20px;
+			height: 20px;
+			position: absolute;
+			bottom: 18px;
+			left: 10px;
+    }
+    .search-wp .close {
+      background-image: url(../images/close.svg);
+			width: 20px;
+			height: 20px;
+			position: absolute;
+			bottom: 18px;
+			right: 83px;
+			padding: 0;
     }
 </style>
