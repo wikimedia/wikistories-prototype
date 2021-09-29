@@ -7,6 +7,7 @@
             <div class="icon"/>
             <div v-if="query" class="close" @click="onClear"/>
         </form>
+        <div v-if="loading" class="loading-bar"></div>
         <ListView :items="searchResults"/>
     </div>
 </template>
@@ -27,7 +28,7 @@
           this.clear();
         }
       },
-      computed: mapGetters(['searchResults', 'query'])
+      computed: mapGetters(['loading', 'searchResults', 'query'])
     }
 </script>
 <style>
@@ -41,6 +42,22 @@
 			height: 16px;
       margin: 20px 0;
       cursor: pointer;
+    }
+    .search-wp .loading-bar {
+      position: absolute;
+      height: 3px;
+      width: 130px;
+      border-radius: 3px;
+      background: #3366cc;
+      animation-name: 'loader';
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease;
+    }
+    @keyframes loader {
+      0%   {transform: translateX(0px);}
+      50%  {transform: translateX(calc( 100vw - 175px ) );}
+      100% {transform: translateX(0px);}
     }
     .search-wp form {
       position: relative;

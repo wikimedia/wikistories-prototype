@@ -2,10 +2,12 @@ import { request, abortAllRequest } from '@utils/api';
 
 export default {
   state: {
+    loading: false,
     results: [],
     query: ''
   },
   mutations: {
+    setLoading: (state, loading) => state.loading = loading,
     setQuery: (state, query) => state.query = query,
     setSearchResults: (state, results) => state.results = results,
   },
@@ -18,10 +20,12 @@ export default {
       
       if ( !queryString ) {
         abortAllRequest();
+        commit('setLoading', false)
         commit('setSearchResults', []);
         return;
       }
 
+      commit('setLoading', true)
       request( url, data => {
         if ( data.query && data.query.pages ) {
           data.query.pages.sort( ( a, b ) => a.index - b.index );    
@@ -34,16 +38,19 @@ export default {
             }
           }))
         }
+        commit('setLoading', false)
       })
       
     },
     clear: ({commit}) => {
       abortAllRequest();
+      commit('setLoading', false);
       commit('setSearchResults', []);
       commit('setQuery', '');
     }
   },
   getters: {
+    loading: (state) => state.loading,
     searchResults: (state) => state.results,
     query: (state) => state.query
   }
