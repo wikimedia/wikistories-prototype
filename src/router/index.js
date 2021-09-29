@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '@views/Home.vue'
 import Story from '@views/Story.vue'
 import SearchWikipedia from '@views/SearchWikipedia.vue'
+import SearchCommons from '@views/SearchCommons.vue'
 import BrowseArticle from '@views/BrowseArticle.vue'
 
 Vue.use(VueRouter)
@@ -22,6 +23,11 @@ const routes = [
     path: '/searchwikipedia',
     name: 'SearchWikipedia',
     component: SearchWikipedia
+  },
+  {
+    path: '/searchcommons',
+    name: 'SearchCommons',
+    component: SearchCommons
   },
   {
     path: '/article/:article',

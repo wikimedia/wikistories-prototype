@@ -5,6 +5,10 @@
             to="/searchwikipedia"
             v-if="currentFrame.noImage">Search Wikipedia</router-link>
         <p v-if="currentFrame.text">{{ currentFrame.text }}</p>
+        <!-- temp here -->
+        <router-link
+            to="/searchcommons"
+            v-if="currentFrame.noImage">Search Media</router-link>
     </div>
 </template>
 
