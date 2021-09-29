@@ -1,28 +1,26 @@
 <template>
     <div class="view">
-        <div class="toolbar">
-            <div @click="onBack">Back</div>
-            <div @click="onConfirm">Confirm</div>
-        </div>
-        <div class="article" @mouseup="onMouseUp" v-html="currentArticle"></div>
-        <div :style="selectionToolbarStyle">
+        <Back></Back>
+        <div class="article" @mouseup="onAfterSelect" @touchend="onAfterSelect" v-html="currentArticle"></div>
+        <div :style="selectionToolbarStyle" class="toolbar">
             <div @click="onUseText">Use this text</div>
             <div @click="onDismiss">Dismiss</div>
         </div>
     </div>
 </template>
 <script>
-  import {mapGetters, mapActions} from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
+  import Back from '@components/Back.vue'
 
   export default {
     name: 'Article',
     props: ['article'],
+    components: { Back },
     data: () => {
       return {
         selectionToolbarStyle: {
           display: 'none',
-          position: 'absolute',
-          bottom: 0
+          position: 'absolute'
         },
         selectedText: null
       }
@@ -30,19 +28,14 @@
     computed: mapGetters( ['currentArticle'] ),
     methods: {
       ...mapActions( ['fetchArticle', 'setText', 'setImg'] ),
-      onBack: function () {
-        this.$router.go( -1 )
-      },
-      onConfirm: function () {
-      },
-      onMouseUp: function () {
+      onAfterSelect: function () {
         const s = document.getSelection()
         const r = s && s.getRangeAt( 0 )
         if ( r && !r.collapsed ) {
           const rect = r.getBoundingClientRect()
           this.selectedText = s.toString()
-          this.selectionToolbarStyle.display = 'block'
-          this.selectionToolbarStyle.top = ( rect.top - rect.height ) + 'px';
+          this.selectionToolbarStyle.display = 'flex'
+          this.selectionToolbarStyle.top = ( rect.top - 43 ) + 'px';
           this.selectionToolbarStyle.left = rect.left + 'px';
         } else {
           this.selectionToolbarStyle.display = 'none'
@@ -63,8 +56,6 @@
 </script>
 <style>
     .toolbar {
-        width: 100vw;
-        height: 45px;
         display: flex;
         flex-direction: row;
         align-content: stretch;
@@ -82,9 +73,9 @@
 
     .article {
         overflow: scroll;
-        padding: 32px 16px 0 16px;
+        padding: 0 16px 0 16px;
         position: absolute;
-        top: 45px;
+        top: 36px;
         bottom: 0;
         right: 0;
         left: 0;
