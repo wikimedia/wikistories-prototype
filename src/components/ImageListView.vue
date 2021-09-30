@@ -3,7 +3,7 @@
         <div class="imagelistview__list-wrapper">
             <div class="imagelistview__list">
                 <div v-for="item in items" :key="item.title" :title="item.title" class="imagelistview__list-image" :style="{width: `${item.width}px`}">
-                    <img :src="item.thumb" :alt="item.title" />
+                    <img :src="item.thumb" :alt="item.title" loading="lazy"/>
                 </div>
             </div>
         </div>
