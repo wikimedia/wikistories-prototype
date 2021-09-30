@@ -8,7 +8,7 @@
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'StoryViewer',
-  computed: mapGetters(['currentFrame']),
+  computed: mapGetters(['currentFrame', 'storyLength']),
   methods: {
     ...mapActions(['selectFrame']),
     playNextFrame: (currentFrameId, nextFrame) => {
@@ -18,18 +18,19 @@ export default {
       }, 2000)
     }
   },
+  beforeMount: function() {
+    if (this.currentFrame.id > 1) {
+      this.selectFrame(1)
+    }
+  },
   mounted: function() {
-    const currentFrameId = this.$store.getters.currentFrame.frameId
-    const storyEnd = this.$store.getters.framesLength
-    if (currentFrameId < storyEnd) {
-      this.playNextFrame(currentFrameId, this.selectFrame)
+    if (this.currentFrame.id < this.storyLength) {
+      this.playNextFrame(this.currentFrame.id, this.selectFrame)
     }
   },
   updated: function() {
-    const currentFrameId = this.$store.getters.currentFrame.frameId
-    const storyEnd = this.$store.getters.framesLength
-    if (currentFrameId < storyEnd) {
-      this.playNextFrame(currentFrameId, this.selectFrame)
+    if (this.currentFrame.id < this.storyLength) {
+      this.playNextFrame(this.currentFrame.id, this.selectFrame)
     }
   }
 }

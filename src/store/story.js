@@ -67,9 +67,9 @@ export default {
         text: f.text,
         style: makeFrameStyle(f),
         noImage: f.img === '',
-        frameId: state.currentFrameId
+        id: state.currentFrameId
       }
     },
-    framesLength: state => state.frames.length
+    storyLength: state => state.frames.length
   }
 }
