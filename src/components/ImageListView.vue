@@ -1,25 +1,10 @@
 <template>
     <div class="imagelistview">
         <div class="imagelistview__list-wrapper">
-            <div class="imagelistview__list imagelistview__list--image">
-                <a v-for="item in items" :key="item.title" href="#" :title="item.title" class="sdms-image-result sdms-image-result--portrait" :style="{width: `${item.width}px`}" >
-                    <img :src="item.thumb" :alt="item.title" class="sd-image" style="height: 100% !important; max-width: 3777px !important; max-height: 4343px;" />
-                </a>
-                <!-- <a href="https://commons.wikimedia.org/wiki/File:Kaio_tegata.jpg" title="File:Kaio tegata.jpg" class="sdms-image-result sdms-image-result--portrait" style="width: 156px;">
-                    <img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Kaio_tegata.jpg/180px-Kaio_tegata.jpg" alt="Kaio tegata.jpg" loading="lazy" class="sd-image" style="height: 100% !important; max-width: 3777px !important; max-height: 4343px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Kaio_tegata.jpg/180px-Kaio_tegata.jpg" />
-                </a>
-                <a href="https://commons.wikimedia.org/wiki/File:Kaio_tegata.jpg" title="File:Kaio tegata.jpg" class="sdms-image-result sdms-image-result--portrait" style="width: 156px;">
-                    <img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Kaio_tegata.jpg/180px-Kaio_tegata.jpg" alt="Kaio tegata.jpg" loading="lazy" class="sd-image" style="height: 100% !important; max-width: 3777px !important; max-height: 4343px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Kaio_tegata.jpg/180px-Kaio_tegata.jpg" />
-                </a>
-                <a href="https://commons.wikimedia.org/wiki/File:Kaio-1.jpg" title="File:Kaio-1.jpg" class="sdms-image-result" style="width: 240px;">
-                    <img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Kaio-1.jpg/240px-Kaio-1.jpg" alt="Kaio-1.jpg" loading="lazy" class="sd-image" style="height: 100% !important; max-width: 2048px !important; max-height: 1536px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Kaio-1.jpg/240px-Kaio-1.jpg" />
-                </a>
-                <a href="https://commons.wikimedia.org/wiki/File:KaioDeAlmeida.png" title="File:KaioDeAlmeida.png" class="sdms-image-result sdms-image-result--portrait" style="width: 120px;">
-                    <img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/KaioDeAlmeida.png/120px-KaioDeAlmeida.png" alt="KaioDeAlmeida.png" loading="lazy" class="sd-image" style="height: 100% !important; max-width: 246px !important; max-height: 369px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/KaioDeAlmeida.png/120px-KaioDeAlmeida.png" />
-                </a>
-                <a href="https://commons.wikimedia.org/wiki/File:Kaio_Pantale%C3%A3o_2019.jpg" title="File:Kaio Pantaleão 2019.jpg" class="sdms-image-result sdms-image-result--portrait" style="width: 171px;">
-                    <img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Kaio_Pantale%C3%A3o_2019.jpg/180px-Kaio_Pantale%C3%A3o_2019.jpg" alt="Kaio Pantaleão 2019.jpg" loading="lazy" class="sd-image" style="height: 100% !important; max-width: 909px !important; max-height: 954px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Kaio_Pantale%C3%A3o_2019.jpg/180px-Kaio_Pantale%C3%A3o_2019.jpg" />
-                </a> -->
+            <div class="imagelistview__list">
+                <div v-for="item in items" :key="item.title" :title="item.title" class="imagelistview__list-image" :style="{width: `${item.width}px`}">
+                    <img :src="item.thumb" :alt="item.title" />
+                </div>
             </div>
         </div>
     </div>
@@ -56,21 +41,17 @@
         order: 1;
         width: 100%;
     }
-    .imagelistview__list--image {
+    .imagelistview__list {
         display: -ms-flexbox;
         display: flex;
         -ms-flex-wrap: wrap;
         flex-wrap: wrap;
+        align-content: flex-start;
+        justify-content: flex-start;
         margin: -8px;
         max-width: calc(100% + 16px);
     }
-
-    .imagelistview__list {
-        align-content: flex-start;
-        justify-content: flex-start;
-    }
-
-    .imagelistview__list .sdms-image-result {
+    .imagelistview__list .imagelistview__list-image {
         -ms-flex-pack: justify;
         justify-content: space-between;
         width: auto;
@@ -80,7 +61,7 @@
         order: 1;
         justify-content: center;
     }
-    .sdms-image-result {
+    .imagelistview__list-image {
         display: -ms-flexbox;
         display: flex;
         align-items: center;
@@ -89,8 +70,12 @@
         height: 180px;
         margin: 8px;
         transition: box-shadow 100ms ease,outline 100ms ease;
+        cursor: pointer;
     }
-    .sdms-image-result img {
+    .imagelistview__list-image:hover, .imagelistview__list-image:focus {
+        box-shadow: 4px 4px 5px -2px #a2a9b1;
+    }
+    .imagelistview__list-image img {
         height: 100%;
         max-height: 100%;
         object-fit: cover;

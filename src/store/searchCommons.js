@@ -1,11 +1,14 @@
 import { request, abortAllRequest } from '@utils/api';
 
+// @todo can we merge this store into search.js? it does things similarly
 export default {
   state: {
+    commonsLoading: false,
     commonsResults: [],
     commonsQuery: ''
   },
   mutations: {
+    setCommonsLoading: (state, loading) => state.commonsLoading = loading,
     setCommonsQuery: (state, query) => state.commonsQuery = query,
     setCommonsSearchResults: (state, results) => state.commonsResults = results,
   },
@@ -18,33 +21,38 @@ export default {
       
       if ( !queryString ) {
         abortAllRequest();
+        commit('setCommonsLoading', false);
         commit('setCommonsSearchResults', []);
         return;
       }
 
+      commit('setCommonsLoading', true);
       request( url, data => {
         if ( data.query && data.query.pages ) {
           commit('setCommonsSearchResults', Object.values(data.query.pages).map(p => {
+            const responsiveUrls = p.imageinfo[0].responsiveUrls && Object.values( p.imageinfo[0].responsiveUrls )[0]
             return {
               title: p.title,
               desc: p.snippet,
-              thumb: p.imageinfo && ( Object.values( p.imageinfo[0].responsiveUrls )[0] || p.imageinfo[0].url ),
+              thumb: responsiveUrls || p.imageinfo[0].url,
               width: p.imageinfo[0].thumbwidth
-              // goto: { name: 'BrowseArticle', params: { article: p.title } }
             }
           }))
         }
+        commit('setCommonsLoading', false);
       })
       
     },
     clearCommons: ({commit}) => {
       abortAllRequest();
+      commit('setCommonsLoading', false);
       commit('setCommonsSearchResults', []);
       commit('setCommonsQuery', '');
     }
   },
   getters: {
-    searchCommonsResults: (state) => state.commonsResults,
+    commonsLoading: (state) => state.commonsLoading,
+    commonsResults: (state) => state.commonsResults,
     commonsQuery: (state) => state.commonsQuery
   }
 }
