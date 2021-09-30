@@ -28,7 +28,8 @@
     computed: mapGetters( ['currentArticle'] ),
     methods: {
       ...mapActions( ['fetchArticle', 'setText', 'setImg'] ),
-      onAfterSelect: function () {
+      onAfterSelect: function (e) {
+        e.preventDefault()
         const s = document.getSelection()
         const r = s && s.getRangeAt( 0 )
         if ( r && !r.collapsed ) {
