@@ -2,9 +2,9 @@
     <div class="imagelistview">
         <div class="imagelistview__list-wrapper">
             <div class="imagelistview__list">
-                <div v-for="item in items" :key="item.title" :title="item.title" @click="onSelect" class="imagelistview__list-image" :style="{width: `${item.width}px`}">
+                <div v-for="item in items" :key="item.id" :data-id="item.id" @click="onSelect" class="imagelistview__list-image" :style="{width: `${item.width}px`}">
                     <img :src="item.thumb" :alt="item.title" loading="lazy"/>
-                    <div :class="{checkbox: true, selected: selected.includes( item.title )}" />
+                    <div :class="{checkbox: true, selected: selected.includes( item.id )}" />
                 </div>
             </div>
         </div>
@@ -14,29 +14,18 @@
 <script>
     export default {
         name: 'ImageListView',
-        props: [ 'items', 'onItemSelect' ],
-        data: () => {
-            return {
-                selected: []
-            }
-        },
+        props: [ 'items', 'onItemSelect', 'selected' ],
         methods: {
             onSelect(e) {
-                const title = e.target.getAttribute( 'title' )
+                const id = e.target.getAttribute( 'data-id' )
 
-                if ( this.selected.includes( title ) ) {
-                    this.selected.splice(this.selected.indexOf( title ), 1);
+                if ( this.selected.includes( id ) ) {
+                    this.selected.splice(this.selected.indexOf( id ), 1);
                 } else {
-                    this.selected.push( title )
+                    this.selected.push( id )
                 }
-                
+
                 this.onItemSelect( this.selected );
-            }
-        },
-        watch: {
-            items() {
-                this.selected = []
-                this.onItemSelect( this.selected )
             }
         }
     }

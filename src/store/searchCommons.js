@@ -23,6 +23,7 @@ export default {
       
       if ( !queryString ) {
         abortAllRequest();
+        commit('setSelection', []);
         commit('setCommonsLoading', false);
         commit('setCommonsSearchResults', []);
         return;
@@ -36,6 +37,7 @@ export default {
             const imageinfo = p.imageinfo[0]
             const responsiveUrls = imageinfo.responsiveUrls && Object.values( imageinfo.responsiveUrls )[0]
             return {
+              id: p.pageid.toString(),
               title: p.title,
               desc: p.snippet,
               thumb: responsiveUrls || imageinfo.url,
@@ -43,12 +45,14 @@ export default {
             }
           }))
         }
+        commit('setSelection', []);
         commit('setCommonsLoading', false);
       })
       
     },
     clearCommons: ({commit}) => {
       abortAllRequest();
+      commit('setSelection', []);
       commit('setCommonsLoading', false);
       commit('setCommonsSearchResults', []);
       commit('setCommonsQuery', '');

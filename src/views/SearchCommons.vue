@@ -12,7 +12,7 @@
             <div v-if="commonsQuery" class="close" @click="onClear"/>
         </form>
         <div v-if="commonsLoading" class="loading-bar"></div>
-        <ImageListView :items="commonsResults" :onItemSelect="onItemSelect"/>
+        <ImageListView :items="commonsResults" :onItemSelect="onItemSelect" :selected="selection"/>
     </div>
 </template>
 <script>
