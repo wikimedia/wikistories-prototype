@@ -17,7 +17,7 @@ export default {
   actions: {
     searchCommons: ({ commit }, query) => {
       const queryString = query.trim();
-      const url = `https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&&uselang=en&generator=search&gsrsearch=filetype%3Abitmap%7Cdrawing%20${queryString}&gsrlimit=40&gsroffset=0&gsrinfo=totalhits%7Csuggestion&gsrprop=size%7Cwordcount%7Ctimestamp%7Csnippet&prop=info%7Cimageinfo%7Centityterms&inprop=url&gsrnamespace=6&iiprop=url%7Csize%7Cmime&iiurlheight=180&wbetterms=label`
+      const url = `https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&uselang=en&generator=search&gsrsearch=filetype%3Abitmap%7Cdrawing%20${queryString}&gsrlimit=40&gsroffset=0&gsrinfo=totalhits%7Csuggestion&gsrprop=snippet&prop=imageinfo&gsrnamespace=6&iiprop=url%7Cextmetadata&iiurlheight=180&iiextmetadatafilter=License%7CLicenseShortName%7CImageDescription%7CArtist`
 
       commit('setCommonsQuery', query)
       
@@ -36,10 +36,12 @@ export default {
           commit('setCommonsSearchResults', pages.map(p => {
             const imageinfo = p.imageinfo[0]
             const responsiveUrls = imageinfo.responsiveUrls && Object.values( imageinfo.responsiveUrls )[0]
+            const extmetadata = imageinfo.extmetadata
+            const description = extmetadata && extmetadata.ImageDescription && extmetadata.ImageDescription.value
             return {
               id: p.pageid.toString(),
               title: p.title,
-              desc: p.snippet,
+              desc: description || p.snippet,
               thumb: responsiveUrls || imageinfo.url,
               width: imageinfo.thumbwidth
             }
