@@ -2,8 +2,9 @@
     <div class="imagelistview">
         <div class="imagelistview__list-wrapper">
             <div class="imagelistview__list">
-                <div v-for="item in items" :key="item.title" :title="item.title" class="imagelistview__list-image" :style="{width: `${item.width}px`}">
+                <div v-for="item in items" :key="item.title" :title="item.title" @click="onSelect" class="imagelistview__list-image" :style="{width: `${item.width}px`}">
                     <img :src="item.thumb" :alt="item.title" loading="lazy"/>
+                    <div :class="{checkbox: true, selected: selected.includes( item.title )}" />
                 </div>
             </div>
         </div>
@@ -13,7 +14,31 @@
 <script>
     export default {
         name: 'ImageListView',
-        props: [ 'items' ]
+        props: [ 'items', 'onItemSelect' ],
+        data: () => {
+            return {
+                selected: []
+            }
+        },
+        methods: {
+            onSelect(e) {
+                const title = e.target.getAttribute( 'title' )
+
+                if ( this.selected.includes( title ) ) {
+                    this.selected.splice(this.selected.indexOf( title ), 1);
+                } else {
+                    this.selected.push( title )
+                }
+                
+                this.onItemSelect( this.selected );
+            }
+        },
+        watch: {
+            items() {
+                this.selected = []
+                this.onItemSelect( this.selected )
+            }
+        }
     }
 </script>
 
@@ -52,6 +77,7 @@
         max-width: calc(100% + 16px);
     }
     .imagelistview__list .imagelistview__list-image {
+        position: relative;
         -ms-flex-pack: justify;
         justify-content: space-between;
         width: auto;
@@ -82,5 +108,22 @@
         object-position: center center;
         pointer-events: none;
         width: 100%;
+    }
+    .imagelistview__list .checkbox {
+        background-image: url(../images/check.svg);
+        width: 20px;
+        height: 20px;
+        background-color: #fff;
+        background-repeat: no-repeat;
+        background-position: center center;
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        border: 1px solid #2A4B8D;
+        box-sizing: border-box;
+        border-radius: 2px;
+    }
+    .imagelistview__list .checkbox.selected {
+        background-color: #2A4B8D;
     }
 </style>

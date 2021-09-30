@@ -1,14 +1,18 @@
 <template>
     <div class="view search-wp">
+        <div class="header">
+          <router-link to='Story'><div class="back"/></router-link>
+          <router-link to='Story' v-if="selection.length"><div class="next"/></router-link>
+          <span class="info" v-if="selection.length">{{ $i18n( 'search-media-info', selection.length ) }}</span>
+        </div>
         <form>
-            <router-link to='Story'><div class="back"/></router-link>
             <div class="label">{{ $i18n('search-media') }}</div>
             <input class="query" type="text" :placeholder="[[ $i18n('search-media') ]]" :value="commonsQuery" @input="onInput" />
             <div class="icon"/>
             <div v-if="commonsQuery" class="close" @click="onClear"/>
         </form>
         <div v-if="commonsLoading" class="loading-bar"></div>
-        <ImageListView :items="commonsResults"/>
+        <ImageListView :items="commonsResults" :onItemSelect="onItemSelect"/>
     </div>
 </template>
 <script>
@@ -18,7 +22,7 @@
       name: 'SearchWikipedia',
       components: { ImageListView },
       methods: {
-        ...mapActions(['searchCommons', 'clearCommons']),
+        ...mapActions(['selectCommons', 'searchCommons', 'clearCommons']),
         onInput: function(e) {
           e.preventDefault()
           this.searchCommons(e.target.value)
@@ -26,9 +30,12 @@
         onClear: function(e) {
           e.preventDefault();
           this.clearCommons();
+        },
+        onItemSelect: function( data ) {
+          this.selectCommons( data );
         }
       },
-      computed: mapGetters(['commonsLoading', 'commonsResults', 'commonsQuery'])
+      computed: mapGetters(['selection', 'commonsLoading', 'commonsResults', 'commonsQuery'])
     }
 </script>
 <style>
@@ -36,10 +43,38 @@
         font-family: Helvetica Neue;
         padding: 0 22px;
     }
-    .search-wp .back {
+    /* @todo header component */
+    .search-wp .header {
+      position: relative;
+      height: 40px;
+    }
+    .search-wp .header .info {
+      position: absolute;
+      margin: 15px 0;
+      left: 50px;
+      font-family: Helvetica Neue;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 17.6px;
+      line-height: 25px;
+      color: #000000;
+    }
+    .search-wp .header .back {
       background-image: url(../images/back.svg);
+      position: absolute;
       width: 16px;
 			height: 16px;
+      left: 0;
+      margin: 20px 0;
+      cursor: pointer;
+    }
+    .search-wp .header .next {
+      background-image: url(../images/back.svg);
+      position: absolute;
+      transform: scaleX(-1); 
+      width: 16px;
+			height: 16px;
+      right: 0;
       margin: 20px 0;
       cursor: pointer;
     }

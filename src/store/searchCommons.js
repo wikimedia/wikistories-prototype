@@ -3,11 +3,13 @@ import { request, abortAllRequest } from '@utils/api';
 // @todo can we merge this store into search.js? it does things similarly
 export default {
   state: {
+    selection: [],
     commonsLoading: false,
     commonsResults: [],
     commonsQuery: ''
   },
   mutations: {
+    setSelection: (state, selection) => state.selection = selection,
     setCommonsLoading: (state, loading) => state.commonsLoading = loading,
     setCommonsQuery: (state, query) => state.commonsQuery = query,
     setCommonsSearchResults: (state, results) => state.commonsResults = results,
@@ -50,9 +52,13 @@ export default {
       commit('setCommonsLoading', false);
       commit('setCommonsSearchResults', []);
       commit('setCommonsQuery', '');
+    },
+    selectCommons: ( {commit}, data ) => {
+        commit( 'setSelection', data );
     }
   },
   getters: {
+    selection: (state) => state.selection,
     commonsLoading: (state) => state.commonsLoading,
     commonsResults: (state) => state.commonsResults,
     commonsQuery: (state) => state.commonsQuery
