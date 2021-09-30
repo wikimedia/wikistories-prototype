@@ -4,7 +4,7 @@
             class="btn-search-wiki"
             to="/searchwikipedia"
             v-if="currentFrame.noImage">Search Wikipedia</router-link>
-        <p v-if="currentFrame.text">{{ currentFrame.text }}</p>
+        <p v-if="currentFrame.text" v-html="currentFrame.text"></p>
         <!-- temp here -->
         <router-link
             to="/searchcommons"

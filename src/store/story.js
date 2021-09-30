@@ -40,6 +40,10 @@ export default {
       const newId = state.frames.length + 1
       state.frames.push({text:'', img: '', id: newId})
       state.currentFrameId = newId
+    },
+    resetFrame: (state, array) => {
+      state.currentFrameId = array.length;
+      state.frames = array;
     }
   },
   actions: {
@@ -48,6 +52,9 @@ export default {
     },
     addFrame: ({commit}) => {
       commit('addFrame')
+    },
+    resetFrame: ({commit}, array) => {
+      commit('resetFrame', array)
     }
   },
   getters: {

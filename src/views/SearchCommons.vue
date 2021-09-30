@@ -2,7 +2,7 @@
     <div class="view search-wp">
         <div class="header">
           <router-link to='Story'><div class="back"/></router-link>
-          <router-link to='Story' v-if="selection.length"><div class="next"/></router-link>
+          <div v-if="selection.length" class="next" @click="editStory"/>
           <span class="info" v-if="selection.length">{{ $i18n( 'search-media-info', selection.length ) }}</span>
         </div>
         <form>
@@ -22,7 +22,7 @@
       name: 'SearchWikipedia',
       components: { ImageListView },
       methods: {
-        ...mapActions(['selectCommons', 'searchCommons', 'clearCommons']),
+        ...mapActions(['selectCommons', 'searchCommons', 'clearCommons', 'resetFrame']),
         onInput: function(e) {
           e.preventDefault()
           this.searchCommons(e.target.value)
@@ -33,6 +33,18 @@
         },
         onItemSelect: function( data ) {
           this.selectCommons( data );
+        },
+        editStory: function(){
+          const array = this.selection.map( ( id, index ) => {
+            const item = this.commonsResults.find( result => result.id === id );
+            return {
+              id: index + 1,
+              img: item.thumb,
+              text: item.desc
+            }
+          })
+          this.resetFrame(array)
+          this.$router.push( { name: 'Story' } )
         }
       },
       computed: mapGetters(['selection', 'commonsLoading', 'commonsResults', 'commonsQuery'])
