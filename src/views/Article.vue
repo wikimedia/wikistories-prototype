@@ -6,7 +6,7 @@
             <div @click="onUseText">Highlight</div>
             <div @click="onDismiss">Clear</div>
         </div>
-        <div class="overlay" v-if="showImages"></div>
+        <div class="article-overlay" v-if="showImages"></div>
         <ArticleImages :images="articleImages" :onSubmit="onUseImage" v-if="showImages" class="images" />
     </div>
 </template>
@@ -119,7 +119,7 @@
         max-width: 100% !important;
         margin: 0;
     }
-    .overlay {
+    .article-overlay {
         background-color: black;
         opacity: 60%;
         position: absolute;
