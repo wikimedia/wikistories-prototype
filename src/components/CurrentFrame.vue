@@ -1,9 +1,5 @@
 <template>
     <div class="current-frame" :style="currentFrame.style">
-        <router-link
-            class="btn-search-wiki"
-            to="/searchwikipedia"
-            v-if="currentFrame.noImage">Search Wikipedia</router-link>
         <p v-if="currentFrame.text">{{ currentFrame.text }}</p>
     </div>
 </template>
@@ -22,15 +18,6 @@
         width: 100vw;
         position: relative;
         text-align: center;
-    }
-    .btn-search-wiki {
-        background-color: white;
-        padding: 10px;
-        border-radius: 4px;
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        right: 20px;
     }
     p {
         position: absolute;
