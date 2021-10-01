@@ -7,36 +7,38 @@
         </div>
         <form>
             <div class="label">{{ $i18n('search-media') }}</div>
-            <input class="query" type="text" :placeholder="[[ $i18n('search-media') ]]" :value="commonsQuery" @input="onInput" />
+            <input class="query" type="text" :placeholder="[[ $i18n('search-media') ]]" :value="query" @input="onInput" v-focus />
             <div class="icon"/>
-            <div v-if="commonsQuery" class="close" @click="onClear"/>
+            <div v-if="query" class="close" @click="onClear"/>
         </form>
-        <div v-if="commonsLoading" class="loading-bar"></div>
-        <ImageListView :items="commonsResults" :onItemSelect="onItemSelect" :selected="selection"/>
+        <div v-if="loading" class="loading-bar"></div>
+        <ImageListView :items="results" :onItemSelect="onItemSelect" :selected="selection"/>
     </div>
 </template>
 <script>
     import { mapActions, mapGetters } from 'vuex'
     import ImageListView from '@components/ImageListView.vue'
+    
     export default {
       name: 'SearchWikipedia',
       components: { ImageListView },
       methods: {
-        ...mapActions(['selectCommons', 'searchCommons', 'clearCommons', 'resetFrame']),
+        ...mapActions('commons', ['select', 'search', 'clear']),
+        ...mapActions(['resetFrame']),
         onInput: function(e) {
           e.preventDefault()
-          this.searchCommons(e.target.value)
+          this.search(e.target.value)
         },
         onClear: function(e) {
           e.preventDefault();
-          this.clearCommons();
+          this.clear();
         },
         onItemSelect: function( data ) {
-          this.selectCommons( data );
+          this.select( data );
         },
         editStory: function(){
           const array = this.selection.map( ( id, index ) => {
-            const item = this.commonsResults.find( result => result.id === id );
+            const item = this.results.find( result => result.id === id );
             return {
               id: index + 1,
               img: item.thumb,
@@ -47,7 +49,7 @@
           this.$router.push( { name: 'Story' } )
         }
       },
-      computed: mapGetters(['selection', 'commonsLoading', 'commonsResults', 'commonsQuery'])
+      computed: mapGetters('commons', ['selection', 'loading', 'results', 'query']),
     }
 </script>
 <style>

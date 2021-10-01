@@ -3,7 +3,7 @@
         <form>
             <router-link to='Story'><div class="back"/></router-link>
             <div class="label">{{ $i18n('search-box') }}</div>
-            <input class="query" type="text" :placeholder="[[ $i18n('search-box') ]]" :value="query" @input="onInput" />
+            <input class="query" type="text" :placeholder="[[ $i18n('search-box') ]]" :value="query" @input="onInput" v-focus />
             <div class="icon"/>
             <div v-if="query" class="close" @click="onClear"/>
         </form>
