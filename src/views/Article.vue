@@ -121,7 +121,7 @@
     }
     .article-overlay {
         background-color: black;
-        opacity: 60%;
+        opacity: 0.6;
         position: absolute;
         top: 0;
         bottom: 0;
