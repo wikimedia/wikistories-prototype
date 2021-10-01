@@ -31,7 +31,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .imagelistview {
         width: 100%;
         height: 100%;

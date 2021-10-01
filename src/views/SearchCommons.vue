@@ -1,27 +1,29 @@
 <template>
-    <div class="view search-wp">
+    <div class="view search-cm">
         <div class="header">
           <router-link to='Story'><div class="back"/></router-link>
           <div v-if="selection.length" class="next" @click="editStory"/>
           <span class="info" v-if="selection.length">{{ $i18n( 'search-media-info', selection.length ) }}</span>
         </div>
-        <form>
-            <div class="label">{{ $i18n('search-media') }}</div>
-            <input class="query" type="text" :placeholder="[[ $i18n('search-media') ]]" :value="query" @input="onInput" v-focus />
-            <div class="icon"/>
-            <div v-if="query" class="close" @click="onClear"/>
-        </form>
-        <div v-if="loading" class="loading-bar"></div>
+        <SearchForm 
+          :label="$i18n('search-media')" 
+          :placeholder="$i18n('search-media')"
+          :query="query"
+          :loading="loading"
+          :onInput="onInput"
+          :onClear="onClear"
+        />
         <ImageListView :items="results" :onItemSelect="onItemSelect" :selected="selection"/>
     </div>
 </template>
 <script>
     import { mapActions, mapGetters } from 'vuex'
     import ImageListView from '@components/ImageListView.vue'
-    
+    import SearchForm from '@components/SearchForm.vue'
+
     export default {
       name: 'SearchWikipedia',
-      components: { ImageListView },
+      components: { ImageListView, SearchForm },
       methods: {
         ...mapActions('commons', ['select', 'search', 'clear']),
         ...mapActions(['resetFrame']),
@@ -53,16 +55,16 @@
     }
 </script>
 <style>
-    .search-wp {
+    .search-cm {
         font-family: Helvetica Neue;
         padding: 0 22px;
     }
     /* @todo header component */
-    .search-wp .header {
+    .search-cm .header {
       position: relative;
       height: 40px;
     }
-    .search-wp .header .info {
+    .search-cm .header .info {
       position: absolute;
       margin: 15px 0;
       left: 50px;
@@ -73,7 +75,7 @@
       line-height: 25px;
       color: #000000;
     }
-    .search-wp .header .back {
+    .search-cm .header .back {
       background-image: url(../images/back.svg);
       position: absolute;
       width: 16px;
@@ -82,7 +84,7 @@
       margin: 20px 0;
       cursor: pointer;
     }
-    .search-wp .header .next {
+    .search-cm .header .next {
       background-image: url(../images/back.svg);
       position: absolute;
       transform: scaleX(-1); 
@@ -92,63 +94,8 @@
       margin: 20px 0;
       cursor: pointer;
     }
-    .search-wp .loading-bar {
-      position: absolute;
-      height: 3px;
-      width: 130px;
-      border-radius: 3px;
-      background: #3366cc;
-      animation-name: 'loader';
-      animation-duration: 2s;
-      animation-iteration-count: infinite;
-      animation-timing-function: ease;
-    }
-    @keyframes loader {
-      0%   {transform: translateX(0px);}
-      50%  {transform: translateX(calc( 100vw - 175px ) );}
-      100% {transform: translateX(0px);}
-    }
-    .search-wp form {
-      position: relative;
-      text-align: left;
-      padding: 10px 0;
-    }
-    .search-wp .imagelistview {
+    .search-cm .imagelistview {
       max-height: calc( 100vh - 147px );
       overflow: scroll;
-    }
-    .search-wp .label {
-      font-size: 18px;
-      font-style: normal;
-      font-weight: bold;
-      line-height: 25px;
-      letter-spacing: 0px;
-      margin: 5px 0;
-    }
-    .search-wp .query {
-      height: 36px;
-      border: 2px solid #3366CC;
-      box-sizing: border-box;
-      border-radius: 2px;
-      padding-left: 35px;
-      width: 100%;
-    }
-    .search-wp .icon {
-      background-image: url(../images/search.svg);
-      width: 20px;
-			height: 20px;
-			position: absolute;
-			bottom: 18px;
-			left: 10px;
-    }
-    .search-wp .close {
-      background-image: url(../images/close.svg);
-			width: 20px;
-			height: 20px;
-			position: absolute;
-			bottom: 18px;
-			right: 10px;
-			padding: 0;
-      cursor: pointer;
     }
 </style>

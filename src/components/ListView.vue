@@ -19,7 +19,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .listview {
           width: 100%;
           height: 100%;
