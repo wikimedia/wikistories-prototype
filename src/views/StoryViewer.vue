@@ -14,20 +14,25 @@
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'StoryViewer',
+  data: () => {
+    return {
+      frameDuration: 2000
+    }
+  },
   computed: mapGetters(['currentFrame', 'storyLength']),
   methods: {
     ...mapActions(['selectFrame']),
-    playNextFrame: (currentFrameId, nextFrame) => {
+    playNextFrame: (currentFrameId, nextFrame, duration) => {
       const timeoutId = setTimeout( () => {
         nextFrame(currentFrameId + 1)
         clearTimeout(timeoutId)
-      }, 2000)
+      }, duration)
     },
-    restartStory: (nextFrame) => {
+    restartStory: (nextFrame, duration) => {
       const timeoutId = setTimeout( () => {
         nextFrame(1)
         clearTimeout(timeoutId)
-      }, 2000 )
+      }, duration)
     }
   },
   beforeMount: function() {
@@ -37,14 +42,14 @@ export default {
   },
   mounted: function() {
     if (this.currentFrame.id < this.storyLength) {
-      this.playNextFrame(this.currentFrame.id, this.selectFrame)
+      this.playNextFrame(this.currentFrame.id, this.selectFrame, this.frameDuration)
     }
   },
   updated: function() {
     if (this.currentFrame.id < this.storyLength) {
-      this.playNextFrame(this.currentFrame.id, this.selectFrame)
+      this.playNextFrame(this.currentFrame.id, this.selectFrame, this.frameDuration)
     } else {
-      this.restartStory(this.selectFrame)
+      this.restartStory(this.selectFrame, this.frameDuration)
     }
   }
 }
@@ -86,7 +91,9 @@ export default {
     background-color: #FFFFFF;
     animation-name: loading;
     animation-iteration-count: 1;
-    animation-duration: 2s;
+    /* TODO - ideally the animation duration is
+    set as var related to frameDuration  */
+    animation-duration: 2s; 
   }
   .progress .loaded {
     height: 100%;
