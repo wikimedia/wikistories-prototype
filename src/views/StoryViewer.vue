@@ -22,6 +22,12 @@ export default {
         nextFrame(currentFrameId + 1)
         clearTimeout(timeoutId)
       }, 2000)
+    },
+    restartStory: (nextFrame) => {
+      const timeoutId = setTimeout( () => {
+        nextFrame(1)
+        clearTimeout(timeoutId)
+      }, 2000 )
     }
   },
   beforeMount: function() {
@@ -37,6 +43,8 @@ export default {
   updated: function() {
     if (this.currentFrame.id < this.storyLength) {
       this.playNextFrame(this.currentFrame.id, this.selectFrame)
+    } else {
+      this.restartStory(this.selectFrame)
     }
   }
 }
