@@ -37,7 +37,7 @@
         height: 100%;
         background-color: #fff;
         text-align: left;
-        overflow: hidden;
+        overflow: scroll;
         display: -ms-flexbox;
         display: flex;
         -ms-flex-wrap: nowrap;

@@ -1,10 +1,10 @@
 <template>
     <div class="view search-cm">
-        <div class="header">
-          <router-link to='Story'><div class="back"/></router-link>
-          <div v-if="selection.length" class="next" @click="editStory"/>
-          <span class="info" v-if="selection.length">{{ $i18n( 'search-media-info', selection.length ) }}</span>
-        </div>
+        <Navigator 
+          :onBack="() => this.$router.push( { name: 'Story' } )"
+          :onNext="selection.length && editStory" 
+          :info="selection.length && $i18n( 'search-media-info', selection.length )"
+        />
         <SearchForm 
           :label="$i18n('search-media')" 
           :placeholder="$i18n('search-media')"
@@ -20,10 +20,11 @@
     import { mapActions, mapGetters } from 'vuex'
     import ImageListView from '@components/ImageListView.vue'
     import SearchForm from '@components/SearchForm.vue'
+    import Navigator from '@components/Navigator.vue'
 
     export default {
       name: 'SearchWikipedia',
-      components: { ImageListView, SearchForm },
+      components: { ImageListView, SearchForm, Navigator },
       methods: {
         ...mapActions('commons', ['select', 'search', 'clear']),
         ...mapActions(['resetFrame']),
@@ -59,43 +60,7 @@
         font-family: Helvetica Neue;
         padding: 0 22px;
     }
-    /* @todo header component */
-    .search-cm .header {
-      position: relative;
-      height: 40px;
-    }
-    .search-cm .header .info {
-      position: absolute;
-      margin: 15px 0;
-      left: 50px;
-      font-family: Helvetica Neue;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 17.6px;
-      line-height: 25px;
-      color: #000000;
-    }
-    .search-cm .header .back {
-      background-image: url(../images/back.svg);
-      position: absolute;
-      width: 16px;
-			height: 16px;
-      left: 0;
-      margin: 20px 0;
-      cursor: pointer;
-    }
-    .search-cm .header .next {
-      background-image: url(../images/back.svg);
-      position: absolute;
-      transform: scaleX(-1); 
-      width: 16px;
-			height: 16px;
-      right: 0;
-      margin: 20px 0;
-      cursor: pointer;
-    }
     .search-cm .imagelistview {
-      max-height: calc( 100vh - 147px );
-      overflow: scroll;
+      max-height: calc( 100vh - 147px );  
     }
 </style>

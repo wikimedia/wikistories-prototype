@@ -25,7 +25,7 @@
           height: 100%;
           background-color: #fff;
           text-align: left;
-          overflow: hidden;
+          overflow: scroll;
     }
     .listview .item {
           width: 100%;
