@@ -34,7 +34,7 @@ export default {
               title: p.title,
               desc: p.description,
               thumb: p.thumbnail && p.thumbnail.url,
-              goto: { name: 'BrowseArticle', params: { article: p.title } }
+              goto: { name: 'Article', params: { article: p.title } }
             }
           }))
         }

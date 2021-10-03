@@ -3,5 +3,7 @@ export default {
   'btn-create': 'Create a story',
   'search-box': 'Search Wikipedia',
   'search-media': 'Search Media',
-  'search-media-info': '$1 selected'
+  'search-media-info': '$1 selected',
+  'wikimedia-commons': 'Commons',
+  'wikipedia': 'Wikipedia',
 }
