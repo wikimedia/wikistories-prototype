@@ -1,6 +1,6 @@
 <template>
     <div class="current-frame" :style="currentFrame.style">
-        <p v-if="currentFrame.text">{{ currentFrame.text }}</p>
+        <p v-if="currentFrame.text" v-html="currentFrame.text"></p>
     </div>
 </template>
 
