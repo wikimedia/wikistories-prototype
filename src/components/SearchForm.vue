@@ -1,5 +1,5 @@
 <template>
-    <form>
+    <form @submit="onSubmit($event)">
         <div class="label">{{ label }}</div>
         <input class="query" type="text" :placeholder="placeholder" :value="query" @input="onInput" v-focus />
         <div class="icon"/>
@@ -10,7 +10,10 @@
 <script>
     export default {
         name: 'SearchForm',
-        props: [ 'label', 'placeholder', 'query', 'loading', 'onInput', 'onClear']
+        props: [ 'label', 'placeholder', 'query', 'loading', 'onInput', 'onClear'],
+        methods: {
+          onSubmit: e => e.preventDefault
+        }
     }
 </script>
 
