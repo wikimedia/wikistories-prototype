@@ -40,6 +40,14 @@ export default {
       const newId = state.frames.length + 1
       state.frames.push({text:'', img: '', id: newId})
       state.currentFrameId = newId
+    },
+    setText: (state, text) => {
+      const f = state.frames.find(f => f.id === state.currentFrameId)
+      f.text = text
+    },
+    setImg: (state, img) => {
+      const f = state.frames.find(f => f.id === state.currentFrameId)
+      f.img = img
     }
   },
   actions: {
@@ -48,6 +56,12 @@ export default {
     },
     addFrame: ({commit}) => {
       commit('addFrame')
+    },
+    setText: ({commit}, text) => {
+      commit('setText', text)
+    },
+    setImg: ({commit}, img) => {
+      commit('setImg', img)
     }
   },
   getters: {
