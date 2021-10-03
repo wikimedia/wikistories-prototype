@@ -3,17 +3,20 @@
     <router-link class="publish-button" to="/publish">{{ $i18n('btn-publish') }}</router-link>
     <CurrentFrame />
     <Frames />
+    <SearchToolbar />
 </div>
 </template>
 <script>
 import CurrentFrame from '@components/CurrentFrame.vue'
 import Frames from '@components/Frames.vue'
+import SearchToolbar from '@components/SearchToolbar.vue'
 
 export default {
   name: 'Story',
   components: {
         CurrentFrame,
-        Frames
+        Frames,
+        SearchToolbar
   }
 }
 </script>

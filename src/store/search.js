@@ -1,6 +1,7 @@
 import { request, abortAllRequest } from '@utils/api';
 
 export default {
+  namespaced: true,
   state: {
     loading: false,
     results: [],
@@ -9,7 +10,7 @@ export default {
   mutations: {
     setLoading: (state, loading) => state.loading = loading,
     setQuery: (state, query) => state.query = query,
-    setSearchResults: (state, results) => state.results = results,
+    setResults: (state, results) => state.results = results,
   },
   actions: {
     search: ({ commit }, query) => {
@@ -21,19 +22,19 @@ export default {
       if ( !queryString ) {
         abortAllRequest();
         commit('setLoading', false)
-        commit('setSearchResults', []);
+        commit('setResults', []);
         return;
       }
 
       commit('setLoading', true)
       request( url, data => {
         if ( data.pages ) {
-          commit('setSearchResults', Object.values(data.pages).map(p => {
+          commit('setResults', Object.values(data.pages).map(p => {
             return {
               title: p.title,
               desc: p.description,
               thumb: p.thumbnail && p.thumbnail.url,
-              goto: { name: 'BrowseArticle', params: { article: p.title } }
+              goto: { name: 'Article', params: { article: p.title } }
             }
           }))
         }
@@ -44,13 +45,13 @@ export default {
     clear: ({commit}) => {
       abortAllRequest();
       commit('setLoading', false);
-      commit('setSearchResults', []);
+      commit('setResults', []);
       commit('setQuery', '');
     }
   },
   getters: {
     loading: (state) => state.loading,
-    searchResults: (state) => state.results,
+    results: (state) => state.results,
     query: (state) => state.query
   }
 }

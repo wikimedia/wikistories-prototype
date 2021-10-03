@@ -19,13 +19,13 @@
     }
 </script>
 
-<style>
+<style scoped>
     .listview {
           width: 100%;
           height: 100%;
           background-color: #fff;
           text-align: left;
-          overflow: hidden;
+          overflow: scroll;
     }
     .listview .item {
           width: 100%;
