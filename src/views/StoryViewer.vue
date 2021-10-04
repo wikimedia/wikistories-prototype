@@ -61,7 +61,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .viewer {
     height: 100%;
     width: 100vw;
