@@ -1,6 +1,6 @@
 <template>
 <div class="view story">
-    <router-link class="publish-button" to="/publish">{{ $i18n('btn-publish') }}</router-link>
+    <PrimaryButton class="publish-button" :text="$i18n('btn-publish')" :onClick="() => this.$router.push( { name: 'Publish' } )" />
     <CurrentFrame />
     <Frames />
     <SearchToolbar />
@@ -10,13 +10,15 @@
 import CurrentFrame from '@components/CurrentFrame.vue'
 import Frames from '@components/Frames.vue'
 import SearchToolbar from '@components/SearchToolbar.vue'
+import PrimaryButton from '@components/PrimaryButton.vue'
 
 export default {
   name: 'Story',
   components: {
         CurrentFrame,
         Frames,
-        SearchToolbar
+        SearchToolbar,
+        PrimaryButton
   }
 }
 </script>
@@ -25,13 +27,11 @@ export default {
         display: flex;
         flex-direction: column;
     }
+</style>
+<style scoped>
     .publish-button {
         position: absolute;
-        top: 10px;
-        right: 10px;
-        z-index: 100;
-        background-color: white;
-        border-radius: 10px;
-        padding: 10px;
+        right: 24px;
+        top: 24px;
     }
 </style>

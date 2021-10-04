@@ -10,14 +10,17 @@
             <label for="tags">Tags</label>
             <input type="text" id="tags" placeholder="Tags" /><br />
         </div>
-        <router-link to="/viewer">{{ $i18n('btn-publish-wikistory') }}</router-link>
+        <PrimaryButton class="confirm-publish" :text="$i18n('btn-publish-wikistory')" :onClick="() => this.$router.push( { name: 'StoryViewer' } )" />
     </div>
 </template>
 
 <script>
     import { mapGetters } from 'vuex'
+    import PrimaryButton from '@components/PrimaryButton.vue'
+
     export default {
         name: 'Publish',
+        components: { PrimaryButton },
         computed: {
           ...mapGetters(['thumbnails']),
           imgSyle: function () {
@@ -50,5 +53,8 @@
     .img-preview {
         height: 64px;
         width: 32px;
+    }
+    .confirm-publish {
+
     }
 </style>
