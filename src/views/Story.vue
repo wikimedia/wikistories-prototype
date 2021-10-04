@@ -1,12 +1,13 @@
 <template>
 <div class="view story">
-    <PrimaryButton class="publish-button" :text="$i18n('btn-publish')" :onClick="() => this.$router.push( { name: 'Publish' } )" />
+    <PrimaryButton class="publish-button" :text="$i18n('btn-publish')" :onClick="onPublish" />
     <CurrentFrame />
     <Frames />
     <SearchToolbar />
 </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
 import CurrentFrame from '@components/CurrentFrame.vue'
 import Frames from '@components/Frames.vue'
 import SearchToolbar from '@components/SearchToolbar.vue'
@@ -19,6 +20,13 @@ export default {
         Frames,
         SearchToolbar,
         PrimaryButton
+  },
+  methods: {
+      ...mapActions(['setCreationDate']),
+      onPublish: function() {
+        this.setCreationDate(); 
+        this.$router.push( { name: 'Publish' } );
+      }
   }
 }
 </script>

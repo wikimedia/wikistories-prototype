@@ -2,13 +2,13 @@
     <div class="view publish">
         <Navigator :onBack="() => this.$router.push( { name: 'Story' } )" />
         <div class="header">
-            <h2 class="title">Tiger</h2>
+            <h2 class="title">{{ storyInfo.title }}</h2>
             <div class="img-preview" :style="imgSyle"></div>
         </div>
         <div class="main">
             <div class="item">
                 <label class="label" for="date">Date</label>
-                <p class="info">{{ date }}</p>
+                <p class="info">{{ storyInfo.creationDate | formatDate }}</p>
             </div>
             <div class="item">
                 <label class="tags" for="tags">Tags</label>
@@ -30,16 +30,9 @@
 
     export default {
         name: 'Publish',
-        data: () => {
-            const today = new Date();
-            const date = `${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`
-            return {
-                date
-            }
-        },
         components: { Navigator, PrimaryButton },
         computed: {
-          ...mapGetters(['thumbnails']),
+          ...mapGetters(['thumbnails','storyInfo']),
           imgSyle: function () {
               return this.thumbnails[0].style
           }
