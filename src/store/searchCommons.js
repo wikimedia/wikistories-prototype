@@ -1,4 +1,5 @@
 import { request, abortAllRequest } from '@utils/api';
+import { lang } from '@utils/lang'
 
 // @todo can we merge this store into search.js? it does things similarly
 export default {
@@ -18,7 +19,7 @@ export default {
   actions: {
     search: ({ commit }, query) => {
       const queryString = query.trim();
-      const url = `https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&uselang=en&generator=search&gsrsearch=filetype%3Abitmap%7Cdrawing%20${queryString}&gsrlimit=40&gsroffset=0&gsrinfo=totalhits%7Csuggestion&gsrprop=snippet&prop=imageinfo&gsrnamespace=6&iiprop=url%7Cextmetadata&iiurlheight=180&iiextmetadatafilter=License%7CLicenseShortName%7CImageDescription%7CArtist`
+      const url = `https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&uselang=${lang}&generator=search&gsrsearch=filetype%3Abitmap%7Cdrawing%20${queryString}&gsrlimit=40&gsroffset=0&gsrinfo=totalhits%7Csuggestion&gsrprop=snippet&prop=imageinfo&gsrnamespace=6&iiprop=url%7Cextmetadata&iiurlheight=180&iiextmetadatafilter=License%7CLicenseShortName%7CImageDescription%7CArtist&iiextmetadatalanguage=${lang}`
 
       commit('setQuery', query)
       
