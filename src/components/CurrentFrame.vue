@@ -14,7 +14,7 @@
 
 <style>
     .current-frame {
-        height: 80%;
+        height: 85%;
         width: 100vw;
         position: relative;
         text-align: center;
