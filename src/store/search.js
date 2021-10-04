@@ -1,50 +1,57 @@
 import { request, abortAllRequest } from '@utils/api';
 
 export default {
+  namespaced: true,
   state: {
+    loading: false,
     results: [],
     query: ''
   },
   mutations: {
+    setLoading: (state, loading) => state.loading = loading,
     setQuery: (state, query) => state.query = query,
-    setSearchResults: (state, results) => state.results = results,
+    setResults: (state, results) => state.results = results,
   },
   actions: {
     search: ({ commit }, query) => {
       const queryString = query.trim();
-      const url = "https://en.wikipedia.org/w/api.php?action=query&generator=prefixsearch&prop=description|pageimages|pageprops&piprop=thumbnail&ppprop=displaytitle&redirects=false&pithumbsize=64&gpslimit=10&gpsnamespace=0&format=json&formatversion=2&origin=*&gpssearch=" + queryString;
+      const url = `https://en.wikipedia.org/w/rest.php/v1/search/title?q=${queryString}&limit=10`;
 
       commit('setQuery', query)
       
       if ( !queryString ) {
         abortAllRequest();
-        commit('setSearchResults', []);
+        commit('setLoading', false)
+        commit('setResults', []);
         return;
       }
 
+      commit('setLoading', true)
       request( url, data => {
-        if ( data.query && data.query.pages ) {
-          data.query.pages.sort( ( a, b ) => a.index - b.index );    
-          commit('setSearchResults', Object.values(data.query.pages).map(p => {
+        if ( data.pages ) {
+          commit('setResults', Object.values(data.pages).map(p => {
             return {
               title: p.title,
               desc: p.description,
-              thumb: p.thumbnail && p.thumbnail.source,
-              goto: { name: 'BrowseArticle', params: { article: p.title } }
+              thumb: p.thumbnail && p.thumbnail.url,
+              goto: { name: 'Article', params: { article: p.title } }
             }
           }))
         }
+        commit('setLoading', false)
       })
       
     },
     clear: ({commit}) => {
       abortAllRequest();
-      commit('setSearchResults', []);
+      commit('setLoading', false);
+      commit('setResults', []);
       commit('setQuery', '');
     }
   },
   getters: {
-    searchResults: (state) => state.results,
+    loading: (state) => state.loading,
+    results: (state) => state.results,
     query: (state) => state.query
   }
 }
