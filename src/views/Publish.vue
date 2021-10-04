@@ -92,6 +92,6 @@
         margin: 0;
     }
     .confirm-publish {
-        margin-top: 20px;
+        margin: 20px auto;
     }
 </style>
