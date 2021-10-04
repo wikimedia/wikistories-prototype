@@ -1,14 +1,23 @@
 <template>
     <div class="view publish">
+        <Navigator :onBack="() => this.$router.push( { name: 'Story' } )" />
         <div class="header">
             <h2 class="title">Tiger</h2>
             <div class="img-preview" :style="imgSyle"></div>
         </div>
         <div class="main">
-            <label for="title">Title</label>
-            <input type="text" id="title" placeholder="Title" /><br />
-            <label for="tags">Tags</label>
-            <input type="text" id="tags" placeholder="Tags" /><br />
+            <div class="item">
+                <label class="label" for="date">Date</label>
+                <p class="info">{{ date }}</p>
+            </div>
+            <div class="item">
+                <label class="tags" for="tags">Tags</label>
+                <p class="info">Not set yet</p>
+            </div>
+            <div class="item">
+                <label class="Language" for="tags">Language</label>
+                <p class="info">English</p>
+            </div>
         </div>
         <PrimaryButton class="confirm-publish" :text="$i18n('btn-publish-wikistory')" :onClick="() => this.$router.push( { name: 'StoryViewer' } )" />
     </div>
@@ -17,10 +26,18 @@
 <script>
     import { mapGetters } from 'vuex'
     import PrimaryButton from '@components/PrimaryButton.vue'
+    import Navigator from '@components/Navigator.vue'
 
     export default {
         name: 'Publish',
-        components: { PrimaryButton },
+        data: () => {
+            const today = new Date();
+            const date = `${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`
+            return {
+                date
+            }
+        },
+        components: { Navigator, PrimaryButton },
         computed: {
           ...mapGetters(['thumbnails']),
           imgSyle: function () {
@@ -31,7 +48,7 @@
 </script>
 <style scoped>
     .publish {
-        padding: 20px;
+        padding: 0 20px;
         display: flex;
         flex-direction: column;
         justify-content: stretch;
@@ -40,21 +57,48 @@
         display: flex;
         flex-direction: row;
         justify-content: space-around;
-    }
-    .header, .main {
-        border-bottom: solid #C4C4C4 1px;
+        border-bottom: solid #BDBDBD 1px;
         padding-bottom: 10px;
         margin-bottom: 10px;
     }
-    input {
-        margin: 10px;
-        width: 80vw;
+    .header .title {
+        font-family: Georgia;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 31px;
+        color: #333333;
+        margin-right: auto;
     }
-    .img-preview {
+    .header .img-preview {
         height: 64px;
         width: 32px;
+        margin-left: auto;
+    }
+    .main {
+        border-bottom: solid #BDBDBD 1px;
+    }
+    .item {
+        margin-bottom: 20px;
+    }
+    .item .label {
+        font-family: Helvetica Neue;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 28px;
+        color: #4F4F4F;
+    }
+    .item .info {
+        font-family: Helvetica Neue;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 24px;
+        color: #828282;
+        margin: 0;
     }
     .confirm-publish {
-
+        margin-top: 20px;
     }
 </style>

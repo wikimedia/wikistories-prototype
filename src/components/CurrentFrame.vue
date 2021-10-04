@@ -12,7 +12,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .current-frame {
         height: 85%;
         width: 100vw;
