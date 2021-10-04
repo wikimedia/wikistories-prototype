@@ -1,3 +1,4 @@
+import { wikiSubdomain } from '@utils/wiki'
 
 const transforms = {
   'put styles in body': doc => {
@@ -55,7 +56,7 @@ export default {
   },
   actions: {
     fetchArticle: async ({commit}, title) => {
-      const url = 'https://en.wikipedia.org/api/rest_v1/page/mobile-html/' + title
+      const url = `https://${wikiSubdomain}.wikipedia.org/api/rest_v1/page/mobile-html/${title}`
       const article = await (await fetch(url)).text()
       const doc = new DOMParser().parseFromString(article, 'text/html')
       Object.values(transforms).forEach(t => t(doc))

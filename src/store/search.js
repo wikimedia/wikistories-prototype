@@ -1,4 +1,5 @@
-import { request, abortAllRequest } from '@utils/api';
+import { request, abortAllRequest } from '@utils/api'
+import { wikiSubdomain } from '@utils/wiki'
 
 export default {
   namespaced: true,
@@ -15,7 +16,7 @@ export default {
   actions: {
     search: ({ commit }, query) => {
       const queryString = query.trim();
-      const url = `https://en.wikipedia.org/w/rest.php/v1/search/title?q=${queryString}&limit=10`;
+      const url = `https://${wikiSubdomain}.wikipedia.org/w/rest.php/v1/search/title?q=${queryString}&limit=10`;
 
       commit('setQuery', query)
       
