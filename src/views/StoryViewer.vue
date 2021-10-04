@@ -6,7 +6,8 @@
         <div v-else-if="currentFrame.id > n" class="loaded"></div>
       </div>
     </div>
-    <p v-if="currentFrame.text">{{ currentFrame.text }}</p>
+    <div class="story-text" v-if="currentFrame.text">{{ currentFrame.text }}</div>
+    <div class="restart-btn" v-if="currentFrame.id === storyLength" @click="selectFrame(1)">Start again</div>
   </div>
 </template>
 
@@ -27,12 +28,6 @@ export default {
         nextFrame(currentFrameId + 1)
         clearTimeout(timeoutId)
       }, duration)
-    },
-    restartStory: (nextFrame, duration) => {
-      const timeoutId = setTimeout( () => {
-        nextFrame(1)
-        clearTimeout(timeoutId)
-      }, duration)
     }
   },
   beforeMount: function() {
@@ -48,9 +43,7 @@ export default {
   updated: function() {
     if (this.currentFrame.id < this.storyLength) {
       this.playNextFrame(this.currentFrame.id, this.selectFrame, this.frameDuration)
-    } else {
-      this.restartStory(this.selectFrame, this.frameDuration)
-    }
+    } 
   }
 }
 </script>
@@ -62,15 +55,26 @@ export default {
     position: relative;
     text-align: center;
   }
-  p {
+  .story-text {
     position: absolute;
-    bottom: 20px;
+    bottom: 80px;
     left: 20px;
     right: 20px;
     border-radius: 10px;
     background-color: white;
     margin: 0;
     padding: 10px;
+  }
+  .restart-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+    background-color: white;
+    padding: 8px;
+    font-weight: bold;
+    width: 90px;
   }
   .progress-container {
     display: flex;
