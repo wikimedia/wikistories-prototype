@@ -24,17 +24,17 @@ export default {
   computed: mapGetters(['currentFrame', 'storyLength']),
   methods: {
     ...mapActions(['selectFrame']),
-    playNextFrame: (currentFrameId, nextFrame, duration) => {
+    playNextFrame: function() {
       const timeoutId = setTimeout( () => {
-        nextFrame(currentFrameId + 1)
+        this.selectFrame(this.currentFrame.id + 1)
         clearTimeout(timeoutId)
-      }, duration)
+      }, this.frameDuration)
     },
-    restartStory: function () {
+    restartStory: function() {
       this.storyEnd = false
       this.selectFrame(1)
     },
-    endStory: function () {
+    endStory: function() {
       const timeoutId = setTimeout( ()=> {
         this.storyEnd = true
         clearTimeout(timeoutId)
@@ -48,12 +48,12 @@ export default {
   },
   mounted: function() {
     if (this.currentFrame.id < this.storyLength) {
-      this.playNextFrame(this.currentFrame.id, this.selectFrame, this.frameDuration)
+      this.playNextFrame()
     }
   },
   updated: function() {
     if (this.currentFrame.id < this.storyLength) {
-      this.playNextFrame(this.currentFrame.id, this.selectFrame, this.frameDuration)
+      this.playNextFrame()
     } else if(!this.storyEnd) {
       this.endStory()
     }
