@@ -6,7 +6,7 @@
     name: 'Back'
   }
 </script>
-<style>
+<style scoped>
     .back {
         background-image: url(../images/back.svg);
         background-repeat: no-repeat;
