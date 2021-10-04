@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="story-text" v-if="currentFrame.text">{{ currentFrame.text }}</div>
-    <div class="restart-btn" v-if="currentFrame.id === storyLength" @click="selectFrame(1)">Start again</div>
+    <div class="restart-btn" v-if="storyEnd" @click="restartStory">{{ $i18n('btn-restart-story') }}</div>
   </div>
 </template>
 
@@ -17,7 +17,8 @@ export default {
   name: 'StoryViewer',
   data: () => {
     return {
-      frameDuration: 2000
+      frameDuration: 2000,
+      storyEnd: false
     }
   },
   computed: mapGetters(['currentFrame', 'storyLength']),
@@ -28,11 +29,21 @@ export default {
         nextFrame(currentFrameId + 1)
         clearTimeout(timeoutId)
       }, duration)
+    },
+    restartStory: function () {
+      this.storyEnd = false
+      this.selectFrame(1)
+    },
+    endStory: function () {
+      const timeoutId = setTimeout( ()=> {
+        this.storyEnd = true
+        clearTimeout(timeoutId)
+      }, this.frameDuration)
     }
   },
   beforeMount: function() {
     if (this.currentFrame.id > 1) {
-      this.selectFrame(1)
+      this.restartStory()
     }
   },
   mounted: function() {
@@ -43,7 +54,9 @@ export default {
   updated: function() {
     if (this.currentFrame.id < this.storyLength) {
       this.playNextFrame(this.currentFrame.id, this.selectFrame, this.frameDuration)
-    } 
+    } else if(!this.storyEnd) {
+      this.endStory()
+    }
   }
 }
 </script>
