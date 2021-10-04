@@ -21,26 +21,36 @@
 <style>
     .frames {
         width: 100vw;
-        height: 100px;
+        height: 53px;
         display: flex;
         flex-direction: row;
         align-items: center;
-        overflow: scroll;
-        border-top: solid black 1px;
+        overflow: hidden;
     }
     .frame {
-        width: 25px;
-        height: 50px;
-        padding: 10px;
-        margin: 10px;
+        width: 28px;
+        height: 36px;
+        margin-left: 15px;
         flex: none;
+        cursor: pointer;
+        text-transform: capitalize;
     }
     .btn-add-frame {
-        border: dotted black 2px;
+        display: grid;
+        place-items: center;
+        background-size: 20px;
+        border: 1px dashed #000000;
+        box-sizing: border-box;
+        border-radius: 2px;
         font-size: 24px;
+        text-align: center;
+        vertical-align: middle;
+        margin-left: auto;
+        margin-right: 15px;
     }
     .selected-frame {
-        outline: blue double 4px;
+        outline: #3366CC auto 4px;
+        outline-offset: 4px;
     }
 
 </style>
