@@ -19,7 +19,7 @@
                 <p class="info">English</p>
             </div>
         </div>
-        <PrimaryButton class="confirm-publish" :text="$i18n('btn-publish-wikistory')" :onClick="() => this.$router.push( { name: 'StoryViewer' } )" />
+        <PrimaryButton class="confirm-publish" :text="$i18n('btn-publish-wikistory')" :onClick="onPublish" />
     </div>
 </template>
 
@@ -31,6 +31,11 @@
     export default {
         name: 'Publish',
         components: { Navigator, PrimaryButton },
+        methods: {
+            onPublish: function() {
+                this.$router.push( { name: 'StoryViewer' } );
+            }
+        },
         computed: {
           ...mapGetters(['thumbnails','storyInfo']),
           imgSyle: function () {
