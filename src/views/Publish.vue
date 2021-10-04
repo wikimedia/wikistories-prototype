@@ -12,7 +12,7 @@
             </div>
             <div class="item">
                 <label class="tags" for="tags">Tags</label>
-                <p class="info">Not set yet</p>
+                <p class="info">{{ $i18n('tags-not-set') }}</p>
             </div>
             <div class="item">
                 <label class="Language" for="tags">Language</label>

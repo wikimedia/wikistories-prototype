@@ -8,4 +8,5 @@ export default {
   'wikipedia': 'Wikipedia',
   'btn-publish': 'Publish',
   'btn-publish-wikistory': 'Publish Wikistory',
+  'tags-not-set': 'Not set yet'
 }
