@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@views/Home.vue'
 import Story from '@views/Story.vue'
+import StoryViewer from '@views/StoryViewer.vue'
 import SearchWikipedia from '@views/SearchWikipedia.vue'
 import SearchCommons from '@views/SearchCommons.vue'
 import Article from '@views/Article.vue'
@@ -34,6 +35,11 @@ const routes = [
     name: 'Article',
     component: Article,
     props: true
+  },
+  {
+    path: '/viewer',
+    name: 'StoryViewer',
+    component: StoryViewer
   }
 ]
 

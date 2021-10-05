@@ -3,6 +3,7 @@
     <div class="center">
       <b>{{ $i18n('welcome') }}</b>
       <router-link to="/story" class="create-story">{{ $i18n('btn-create') }}</router-link>
+      <router-link to="/viewer" class="view-story">{{ $i18n('btn-view') }}</router-link>
     </div>
   </div>
 </template>
@@ -23,6 +24,14 @@ export default {
   .create-story {
     background-color: blue;
     color: white;
+    padding: 10px;
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: 10px;
+  }
+  .view-story {
+    background-color: white;
+    color: blue;
     padding: 10px;
     font-weight: bold;
     text-decoration: none;
