@@ -3,7 +3,6 @@
     <div class="center">
       <b>{{ $i18n('welcome') }}</b>
       <router-link to="/story" class="create-story">{{ $i18n('btn-create') }}</router-link>
-      <router-link to="/viewer" class="view-story">{{ $i18n('btn-view') }}</router-link>
     </div>
   </div>
 </template>
