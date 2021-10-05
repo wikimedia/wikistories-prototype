@@ -6,6 +6,7 @@ import StoryViewer from '@views/StoryViewer.vue'
 import SearchWikipedia from '@views/SearchWikipedia.vue'
 import SearchCommons from '@views/SearchCommons.vue'
 import Article from '@views/Article.vue'
+import Publish from '@views/Publish.vue'
 
 Vue.use(VueRouter)
 
@@ -35,6 +36,11 @@ const routes = [
     name: 'Article',
     component: Article,
     props: true
+  },
+  {
+    path: '/publish',
+    name: 'Publish',
+    component: Publish
   },
   {
     path: '/viewer',

@@ -12,6 +12,8 @@ const makeFrameStyle = f => {
 
 export default {
   state: {
+    storyTitle: '', // @todo to be edited by user
+    creationDate: null,
     currentFrameId: 1,
     frames: [
       {
@@ -52,6 +54,9 @@ export default {
     setImg: (state, img) => {
       const f = state.frames.find(f => f.id === state.currentFrameId)
       f.img = img
+    },
+    setCreationDate: (state, date) => {
+      state.creationDate = date;
     }
   },
   actions: {
@@ -69,6 +74,9 @@ export default {
     },
     setImg: ({commit}, img) => {
       commit('setImg', img)
+    },
+    setCreationDate: ({commit}) => {
+      commit('setCreationDate', (new Date()).getTime())
     }
   },
   getters: {
@@ -91,6 +99,12 @@ export default {
         id: state.currentFrameId
       }
     },
-    storyLength: state => state.frames.length
+    storyLength: state => state.frames.length,
+    storyInfo: (state) => {
+      return {
+        title: state.frames[0].text, // @todo to be edited by user
+        creationDate: state.creationDate
+      }
+    }
   }
 }
