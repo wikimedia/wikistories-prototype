@@ -58,8 +58,10 @@
         border-bottom: solid #BDBDBD 1px;
         padding-bottom: 10px;
         margin-bottom: 10px;
+        max-height: 150px;
     }
     .header .title {
+        flex: 1;
         font-family: Georgia;
         font-style: normal;
         font-weight: bold;
@@ -67,11 +69,12 @@
         line-height: 31px;
         color: #333333;
         margin-right: auto;
+        overflow: hidden;
     }
     .header .img-preview {
         height: 64px;
         width: 32px;
-        margin-left: auto;
+        margin: auto 0;
     }
     .main {
         border-bottom: solid #BDBDBD 1px;

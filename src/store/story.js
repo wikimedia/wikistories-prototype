@@ -12,7 +12,7 @@ const makeFrameStyle = f => {
 
 export default {
   state: {
-    storyTitle: 'Tiger', // @todo to be edited by user
+    storyTitle: '', // @todo to be edited by user
     creationDate: null,
     currentFrameId: 1,
     frames: [
@@ -102,7 +102,7 @@ export default {
     storyLength: state => state.frames.length,
     storyInfo: (state) => {
       return {
-        title: state.storyTitle,
+        title: state.frames[0].text, // @todo to be edited by user
         creationDate: state.creationDate
       }
     }
