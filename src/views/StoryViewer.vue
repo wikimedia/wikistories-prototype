@@ -88,6 +88,7 @@ export default {
     padding: 8px;
     font-weight: bold;
     width: 90px;
+    cursor: pointer;
   }
   .progress-container {
     display: flex;
