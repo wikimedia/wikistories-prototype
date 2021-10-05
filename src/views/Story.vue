@@ -1,13 +1,17 @@
 <template>
 <div class="view story">
-    <PrimaryButton class="publish-button" :text="$i18n('btn-publish')" :onClick="onPublish" />
+    <PrimaryButton class="publish-button"
+        v-if="currentFrame.id === storyLength"
+        :text="$i18n('btn-publish')"
+        :onClick="onPublish"
+    />
     <CurrentFrame />
     <Frames />
     <SearchToolbar />
 </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import CurrentFrame from '@components/CurrentFrame.vue'
 import Frames from '@components/Frames.vue'
 import SearchToolbar from '@components/SearchToolbar.vue'
@@ -27,7 +31,8 @@ export default {
         this.setCreationDate(); 
         this.$router.push( { name: 'Publish' } );
       }
-  }
+  },
+  computed: mapGetters(['currentFrame', 'storyLength']),
 }
 </script>
 <style>
