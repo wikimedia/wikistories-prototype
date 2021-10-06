@@ -7,15 +7,15 @@
         </div>
         <div class="main">
             <div class="item">
-                <label class="label" for="date">Date</label>
+                <label class="label">{{ $i18n('publish-date') }}</label>
                 <p class="info">{{ storyInfo.creationDate | formatDate }}</p>
             </div>
             <div class="item">
-                <label class="tags" for="tags">Tags</label>
+                <label class="tags">{{ $i18n('publish-tags') }}</label>
                 <p class="info">{{ $i18n('tags-not-set') }}</p>
             </div>
             <div class="item">
-                <label class="Language" for="tags">Language</label>
+                <label class="Language">{{ $i18n('publish-language') }}</label>
                 <p class="info">English</p>
             </div>
         </div>
