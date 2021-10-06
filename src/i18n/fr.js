@@ -9,5 +9,8 @@ export default {
   'wikipedia': 'Wikipédia',
   'btn-publish': 'Publier',
   'btn-publish-wikistory': 'Publier la Wikistoire',
+  'publish-date': 'Date',
+  'publish-tags': 'Mots clés',
+  'publish-language': 'Langue',
   'tags-not-set': 'Non definies'
 }
