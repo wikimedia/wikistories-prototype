@@ -7,20 +7,19 @@
 <script>
   export default {
     name: 'App',
-    mounted: () => {
-      setStylePropertyVh();
-      window.addEventListener('resize', setStylePropertyVh );
+    methods: {
+      setStylePropertyVh() {        
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`); 
+      }
     },
-    beforeUnmount: () => {
-      window.removeEventListener('resize', setStylePropertyVh );
+    mounted() {
+      this.setStylePropertyVh();
+      window.addEventListener('resize', this.setStylePropertyVh );
+    },
+    beforeUnmount() {
+      window.removeEventListener('resize', this.setStylePropertyVh );
     }
-  }
-
-  // app height and sticky footer
-  const setStylePropertyVh = () => {
-    const vh = window.innerHeight * 0.01;
-    // Then we set the value in the --vh custom property to the root of the document
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
   }
 </script>
 
