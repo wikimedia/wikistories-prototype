@@ -6,7 +6,14 @@
 
 <script>
   export default {
-    name: 'App'
+    name: 'App',
+    mounted: () => {
+      setStylePropertyVh();
+      window.addEventListener('resize', setStylePropertyVh );
+    },
+    beforeUnmount: () => {
+      window.removeEventListener('resize', setStylePropertyVh );
+    }
   }
 
   // app height and sticky footer
@@ -15,8 +22,6 @@
     // Then we set the value in the --vh custom property to the root of the document
     document.documentElement.style.setProperty('--vh', `${vh}px`);
   }
-  setStylePropertyVh();
-  window.addEventListener('resize', setStylePropertyVh );
 </script>
 
 <style>
