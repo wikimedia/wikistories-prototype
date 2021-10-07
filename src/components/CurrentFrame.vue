@@ -15,6 +15,7 @@
 <style scoped>
     .current-frame {
         height: 85%;
+        height: calc(var(--vh, 1vh) * 100 - 110px);
         width: 100vw;
         position: relative;
         text-align: center;

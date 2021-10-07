@@ -8,6 +8,15 @@
   export default {
     name: 'App'
   }
+
+  // app height and sticky footer
+  const setStylePropertyVh = () => {
+    const vh = window.innerHeight * 0.01;
+    // Then we set the value in the --vh custom property to the root of the document
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }
+  setStylePropertyVh();
+  window.addEventListener('resize', setStylePropertyVh );
 </script>
 
 <style>
@@ -24,9 +33,13 @@ body {
   margin: 0;
   background-color: white;
   width: 100vw;
-  height: 100vh;
+  height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 100);
+  overflow: hidden;
 }
 .view {
-  height: 100%;
+  height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 100);
+  overflow: hidden;
 }
 </style>
