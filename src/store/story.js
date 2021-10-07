@@ -95,6 +95,9 @@ export default {
         title: state.frames[0].text, // @todo to be edited by user
         creationDate: state.creationDate
       }
+    },
+    valid: (state) => {
+      return state.frames.length >= 2 && state.frames.every( f => f.img && f.text )
     }
   }
 }

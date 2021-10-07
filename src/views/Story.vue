@@ -1,7 +1,7 @@
 <template>
 <div class="view story">
     <PrimaryButton class="publish-button"
-        v-if="currentFrame.id === storyLength"
+        v-if="canPublish"
         :text="$i18n('btn-publish')"
         :onClick="onPublish"
     />
@@ -32,7 +32,12 @@ export default {
         this.$router.push( { name: 'Publish' } );
       }
   },
-  computed: mapGetters(['currentFrame', 'storyLength']),
+  computed: {
+    ...mapGetters(['currentFrame', 'storyLength', 'valid']),
+    canPublish: function () {
+      return this.valid && this.currentFrame.id === this.storyLength
+    }
+  },
 }
 </script>
 <style>
