@@ -2,7 +2,7 @@
     <div class="view publish">
         <Navigator :onBack="() => this.$router.push( { name: 'Story' } )" />
         <div class="header">
-            <h2 class="title">{{ storyInfo.title }}</h2>
+            <h2 class="title" v-html="storyInfo.title"></h2>
             <div class="img-preview" :style="imgSyle"></div>
         </div>
         <div class="main">
