@@ -6,7 +6,20 @@
 
 <script>
   export default {
-    name: 'App'
+    name: 'App',
+    methods: {
+      setStylePropertyVh() {        
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`); 
+      }
+    },
+    mounted() {
+      this.setStylePropertyVh();
+      window.addEventListener('resize', this.setStylePropertyVh );
+    },
+    beforeUnmount() {
+      window.removeEventListener('resize', this.setStylePropertyVh );
+    }
   }
 </script>
 
@@ -23,9 +36,13 @@ body {
   margin: 0;
   background-color: white;
   width: 100vw;
-  height: 100vh;
+  height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 100);
+  overflow: hidden;
 }
 .view {
-  height: 100%;
+  height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 100);
+  overflow: hidden;
 }
 </style>
