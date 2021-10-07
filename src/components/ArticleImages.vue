@@ -39,6 +39,9 @@
         display: flex;
         justify-content: space-between;
     }
+    .article-images-header span {
+        font-weight: bold;
+    }
     .article-images-header a {
         font-weight: bold;
     }
@@ -54,5 +57,7 @@
     }
     img.selected {
         outline: solid green 2px;
+        border-radius : 2px;
+        color: #3366cc;
     }
 </style>

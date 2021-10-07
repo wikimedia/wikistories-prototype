@@ -6,7 +6,7 @@
         <div v-else-if="currentFrame.id > n" class="loaded"></div>
       </div>
     </div>
-    <div class="story-text" v-if="currentFrame.text">{{ currentFrame.text }}</div>
+    <div class="story-text" v-if="currentFrame.text" v-html="currentFrame.text"></div>
     <div class="restart-btn" v-if="storyEnd" @click="restartStory">{{ $i18n('btn-restart-story') }}</div>
   </div>
 </template>

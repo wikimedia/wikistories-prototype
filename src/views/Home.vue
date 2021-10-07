@@ -21,19 +21,12 @@ export default {
     height: 100%;
   }
   .create-story {
-    background-color: blue;
+    background-color: #3366cc;
     color: white;
     padding: 10px;
     font-weight: bold;
     text-decoration: none;
     margin-top: 10px;
-  }
-  .view-story {
-    background-color: white;
-    color: blue;
-    padding: 10px;
-    font-weight: bold;
-    text-decoration: none;
-    margin-top: 10px;
+    border-radius: 2px;
   }
 </style>

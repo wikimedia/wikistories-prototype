@@ -6,7 +6,7 @@
             <div @click="onUseText">Highlight</div>
             <div @click="onDismiss">Clear</div>
         </div>
-        <div class="article-overlay" v-if="showImages"></div>
+        <div class="article-overlay" v-if="showImages" @click="dismissImages"></div>
         <ArticleImages :images="articleImages" :onSubmit="onUseImage" v-if="showImages" class="images" />
     </div>
 </template>
@@ -69,6 +69,9 @@
         this.setText( this.selectedText )
         this.setImg(img)
         this.$router.push( { name: 'Story' } )
+      },
+      dismissImages: function () {
+        this.showImages = false
       },
       onDismiss: function () {
         this.hideSelectionToolbar()

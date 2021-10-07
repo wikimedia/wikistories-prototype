@@ -7,7 +7,7 @@ const makeFrameStyle = f => {
       backgroundPosition: 'center',
       backgroundSize: 'cover'
     } :
-    { background: 'linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)' }
+    { background: 'linear-gradient(338.27deg, #0BD564 -70.53%, #3366CC 71.84%)' }
 }
 
 export default {
@@ -18,18 +18,8 @@ export default {
     frames: [
       {
         id: 1,
-        img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Bandhavgarh_Tigers.jpg/640px-Bandhavgarh_Tigers.jpg',
-        text: 'Bandhavgarh Tigers'
-      },
-      {
-        id: 2,
-        img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/White_Tiger_in_Touroparc.jpg/640px-White_Tiger_in_Touroparc.jpg',
-        text: 'White Tiger in Touroparc'
-      },
-      {
-        id: 3,
-        img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/TigerVector.png/640px-TigerVector.png',
-        text: 'Taken from the Coat of arms of Vladivostok and modified.'
+        img: null,
+        text: ''
       }
     ]
   },
@@ -105,6 +95,9 @@ export default {
         title: state.frames[0].text, // @todo to be edited by user
         creationDate: state.creationDate
       }
+    },
+    valid: (state) => {
+      return state.frames.length >= 2 && state.frames.every( f => f.img && f.text )
     }
   }
 }
