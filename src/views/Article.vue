@@ -42,10 +42,8 @@
     },
     methods: {
       ...mapActions( ['fetchArticle', 'setText', 'setImg'] ),
-      showSelectionToolbar: function (rangeRect) {
+      showSelectionToolbar: function () {
         this.selectionToolbarStyle.display = 'flex'
-        this.selectionToolbarStyle.top = ( rangeRect.top - 43 ) + 'px';
-        this.selectionToolbarStyle.left = rangeRect.left + 'px';
       },
       hideSelectionToolbar: function () {
         this.selectionToolbarStyle.display = 'none'
@@ -56,7 +54,7 @@
         const r = s && s.getRangeAt(0)
         if ( r && !r.collapsed ) {
           this.selectedText = s.toString()
-          this.showSelectionToolbar(r.getBoundingClientRect())
+          this.showSelectionToolbar()
         } else {
           this.hideSelectionToolbar()
         }
@@ -88,15 +86,22 @@
         flex-direction: row;
         align-content: stretch;
         align-items: center;
-        background-color: dimgray;
+        background-color: black;
+        opacity: 0.75;
+        bottom: 0;
+        width: 100%;
     }
 
     .toolbar > div {
         flex: auto;
         margin: 10px;
         color: white;
-        font-weight: bold;
         cursor: pointer;
+        text-align: center;
+    }
+
+    .toolbar > div:nth-of-type(1) {
+        border-right: solid white 1px;
     }
 
     .article {
