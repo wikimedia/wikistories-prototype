@@ -63,7 +63,8 @@
           this.showSelectionToolbar()
         }
       },
-      onUseText: function () {
+      onUseText: function (e) {
+        e.preventDefault()
         this.hideSelectionToolbar()
         this.showImages = true
       },
