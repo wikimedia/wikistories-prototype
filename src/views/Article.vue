@@ -1,9 +1,9 @@
 <template>
     <div class="view">
         <Back></Back>
-        <div class="article" @mouseup="onAfterSelect" @touchend="onAfterSelect" v-html="currentArticle"></div>
+        <div class="article" v-html="currentArticle"></div>
         <div :style="selectionToolbarStyle" class="toolbar">
-            <div @click="onUseText">Highlight</div>
+            <div @mousedown="onUseText">Highlight</div>
             <div @click="onDismiss">Clear</div>
         </div>
         <div class="article-overlay" v-if="showImages" @click="dismissImages"></div>
@@ -42,21 +42,25 @@
     },
     methods: {
       ...mapActions( ['fetchArticle', 'setText', 'setImg'] ),
+      setToolbarDisplay: function (display) {
+        if ( this.selectionToolbarStyle.display !== display ) {
+          this.selectionToolbarStyle.display = display
+        }
+      },
       showSelectionToolbar: function () {
-        this.selectionToolbarStyle.display = 'flex'
+        this.setToolbarDisplay( 'flex' )
       },
       hideSelectionToolbar: function () {
-        this.selectionToolbarStyle.display = 'none'
+        this.setToolbarDisplay( 'none' )
       },
-      onAfterSelect: function (e) {
-        e.preventDefault()
+      onSelectionChange: function () {
         const s = document.getSelection()
-        const r = s && s.getRangeAt(0)
-        if ( r && !r.collapsed ) {
+        if ( s.isCollapsed ) {
+          this.selectedText = ''
+          this.hideSelectionToolbar()
+        } else {
           this.selectedText = s.toString()
           this.showSelectionToolbar()
-        } else {
-          this.hideSelectionToolbar()
         }
       },
       onUseText: function () {
@@ -78,6 +82,12 @@
     created: function () {
       this.fetchArticle( this.article )
     },
+    mounted() {
+      document.addEventListener( 'selectionchange', this.onSelectionChange )
+    },
+    beforeUnmount() {
+      document.removeEventListener( 'selectionchange', this.onSelectionChange )
+    }
   }
 </script>
 <style>
