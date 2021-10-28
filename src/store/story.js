@@ -1,3 +1,6 @@
+import { wikiSubdomain } from '@utils/wiki'
+import { request } from '@utils/api'
+
 const MAX_FRAMES = 5
 
 const makeFrameStyle = f => {
@@ -19,7 +22,8 @@ export default {
       {
         id: 1,
         img: null,
-        text: ''
+        text: '',
+        attribution: null
       }
     ]
   },
@@ -45,6 +49,10 @@ export default {
       const f = state.frames.find(f => f.id === state.currentFrameId)
       f.img = img
     },
+    setImgAttribution: (state, attribution) => {
+      const f = state.frames.find(f => f.id === state.currentFrameId)
+      f.attribution = attribution
+    },
     setCreationDate: (state, date) => {
       state.creationDate = date;
     }
@@ -64,6 +72,13 @@ export default {
     },
     setImg: ({commit}, img) => {
       commit('setImg', img)
+    },
+    setImgAttribution: ({commit}, title) => {
+      const url = `https://${wikiSubdomain}.wikipedia.org/w/api.php?format=json&formatversion=2&origin=*&action=query&prop=imageinfo&iiextmetadatafilter=License%7CLicenseShortName%7CImageDescription%7CArtist&iiextmetadatalanguage=en&iiextmetadatamultilang=1&iiprop=url%7Cextmetadata&titles=${encodeURIComponent(title)}`
+      request( url, (mediaInfo) => {
+        // TODO - filter/simplify mediaInfo
+        commit('setImgAttribution', mediaInfo)
+      } )
     },
     setCreationDate: ({commit}) => {
       commit('setCreationDate', (new Date()).getTime())
@@ -86,7 +101,8 @@ export default {
         text: f.text,
         style: makeFrameStyle(f),
         noImage: f.img === '',
-        id: state.currentFrameId
+        id: state.currentFrameId,
+        imgAttribution: f.attribution
       }
     },
     storyLength: state => state.frames.length,
