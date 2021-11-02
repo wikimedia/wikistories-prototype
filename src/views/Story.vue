@@ -26,18 +26,28 @@ export default {
         PrimaryButton
   },
   methods: {
-      ...mapActions(['setCreationDate']),
+      ...mapActions(['setCreationDate', 'fetchImgAttribution']),
       onPublish: function() {
         this.setCreationDate(); 
         this.$router.push( { name: 'Publish' } );
       }
   },
   computed: {
-    ...mapGetters(['currentFrame', 'storyLength', 'valid']),
+    ...mapGetters(['currentFrame', 'storyLength', 'valid', 'attributionData']),
     canPublish: function () {
       return this.valid && this.currentFrame.id === this.storyLength
     }
   },
+  mounted: function() {
+    const imgAttribution = this.attributionData
+    if (imgAttribution[0].title !== '') {
+      imgAttribution.forEach(e => {
+        if (!e.attribution) {
+          this.fetchImgAttribution({ id: e.id, title: e.title } )
+        }
+      })
+    }
+  }
 }
 </script>
 <style>

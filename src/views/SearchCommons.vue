@@ -45,7 +45,9 @@
             return {
               id: index + 1,
               img: item.thumb,
-              text: item.desc
+              text: item.desc,
+              imgTitle: item.title,
+              attribution: null
             }
           })
           this.resetFrame(array)

@@ -42,7 +42,7 @@
       }
     },
     methods: {
-      ...mapActions( ['fetchArticle', 'fetchArticleMedia', 'setText', 'setImg', 'setImgAttribution'] ),
+      ...mapActions( ['fetchArticle', 'fetchArticleMedia', 'setText', 'setImg', 'setImgTitle'] ),
       showSelectionToolbar: function () {
         this.selectionToolbarStyle.display = 'flex'
       },
@@ -66,7 +66,7 @@
       },
       onUseImage: function(img) {
         const imageTitle = this.currentArticle.media[img.id].title
-        this.setImgAttribution(imageTitle)
+        this.setImgTitle(imageTitle)
         this.setText( this.selectedText )
         this.setImg(img.src)
         this.$router.push( { name: 'Story' } )
