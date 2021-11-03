@@ -17,7 +17,8 @@
         props: [ 'items', 'onItemSelect', 'selected' ],
         methods: {
             onSelect(e) {
-                const id = e.target.getAttribute( 'data-id' )
+                const id = e.target.getAttribute( 'data-id' ) ||
+                    e.target.parentElement.getAttribute( 'data-id' ) // image tag element
 
                 if ( this.selected.includes( id ) ) {
                     this.selected.splice(this.selected.indexOf( id ), 1);
