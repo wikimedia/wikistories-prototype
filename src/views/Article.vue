@@ -3,7 +3,7 @@
         <Back></Back>
         <div class="article" @mouseup="onAfterSelect" @touchend="onAfterSelect" v-html="currentArticle.html"></div>
         <div :style="selectionToolbarStyle" class="toolbar">
-            <div @click="onUseText">Highlight</div>
+            <div @mousedown="onUseText">Highlight</div>
             <div @click="onDismiss">Clear</div>
         </div>
         <div class="article-overlay" v-if="showImages" @click="dismissImages"></div>
@@ -43,24 +43,29 @@
     },
     methods: {
       ...mapActions( ['fetchArticle', 'fetchArticleMedia', 'setText', 'setImg', 'setImgTitle'] ),
-      showSelectionToolbar: function () {
-        this.selectionToolbarStyle.display = 'flex'
-      },
-      hideSelectionToolbar: function () {
-        this.selectionToolbarStyle.display = 'none'
-      },
-      onAfterSelect: function (e) {
-        e.preventDefault()
-        const s = document.getSelection()
-        const r = s && s.getRangeAt(0)
-        if ( r && !r.collapsed ) {
-          this.selectedText = s.toString()
-          this.showSelectionToolbar()
-        } else {
-          this.hideSelectionToolbar()
+      setToolbarDisplay: function (display) {
+        if ( this.selectionToolbarStyle.display !== display ) {
+          this.selectionToolbarStyle.display = display
         }
       },
-      onUseText: function () {
+      showSelectionToolbar: function () {
+        this.setToolbarDisplay( 'flex' )
+      },
+      hideSelectionToolbar: function () {
+        this.setToolbarDisplay( 'none' )
+      },
+      onSelectionChange: function () {
+        const s = document.getSelection()
+        if ( s.isCollapsed ) {
+          this.selectedText = ''
+          this.hideSelectionToolbar()
+        } else {
+          this.selectedText = s.toString()
+          this.showSelectionToolbar()
+        }
+      },
+      onUseText: function (e) {
+        e.preventDefault()
         this.hideSelectionToolbar()
         this.showImages = true
       },
@@ -82,6 +87,12 @@
       this.fetchArticle( this.article )
       this.fetchArticleMedia( this.article )
     },
+    mounted() {
+      document.addEventListener( 'selectionchange', this.onSelectionChange )
+    },
+    beforeUnmount() {
+      document.removeEventListener( 'selectionchange', this.onSelectionChange )
+    }
   }
 </script>
 <style>
