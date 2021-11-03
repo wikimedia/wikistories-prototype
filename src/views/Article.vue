@@ -1,7 +1,7 @@
 <template>
     <div class="view">
         <Back></Back>
-        <div class="article" @mouseup="onAfterSelect" @touchend="onAfterSelect" v-html="currentArticle.html"></div>
+        <div class="article" v-html="currentArticle.html"></div>
         <div :style="selectionToolbarStyle" class="toolbar">
             <div @mousedown="onUseText">Highlight</div>
             <div @click="onDismiss">Clear</div>
@@ -57,7 +57,6 @@
       onSelectionChange: function () {
         const s = document.getSelection()
         if ( s.isCollapsed ) {
-          this.selectedText = ''
           this.hideSelectionToolbar()
         } else {
           this.selectedText = s.toString()
