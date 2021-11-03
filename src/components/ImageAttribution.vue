@@ -4,7 +4,9 @@
       <div v-for="license in presentLicenses" :key="license" :class="`image-attribution-info-${license.toLowerCase()}`"></div>
       <bdi class="image-attribution-info-author" v-html="currentFrame.imgAttribution.author"></bdi>
     </div>
-    <div class="image-attribution-more-info"></div>
+    <div class="image-attribution-more-info">
+      <a :href="currentFrame.imgAttribution.url" class="image-attribution-more-info-link" target="_blank"></a>
+    </div>
   </div>
 </template>
 
@@ -98,5 +100,10 @@ export default {
 		background-image: url( ../images/attribution-icon-info.svg );
 		background-repeat: no-repeat;
 		background-position: center;
+  }
+  .image-attribution-more-info-link {
+    display: block;
+    height: 44px;
+    width: 44px;
   }
 </style>
