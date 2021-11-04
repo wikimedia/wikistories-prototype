@@ -5,7 +5,7 @@ export default {
   'search-box': '搜尋維基百科',
   'search-media': '搜尋媒體',
   'search-media-info': '$1 選擇',
-  'wikimedia-commons': 'Commons',
+  'wikimedia-commons': '維基共享資源',
   'wikipedia': '維基百科',
   'btn-publish': '發佈',
   'btn-publish-wikistory': '發佈 Wikistory',
