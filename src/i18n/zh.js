@@ -1,7 +1,7 @@
 export default {
   'welcome': '歡迎光臨 Wikistories',
   'btn-create': '創建故事',
-  'btn-restart-story': '重來',
+  'btn-restart-story': '重新開始',
   'search-box': '搜尋維基百科',
   'search-media': '搜尋媒體',
   'search-media-info': '$1 選擇',
