@@ -1,8 +1,8 @@
 <template>
     <div class="article-images">
         <div class="article-images-header">
-            <span>Select an image</span>
-            <a @click="onSubmit(selectedImage)" v-if="selectedImage">Next</a>
+            <span>{{ $i18n('btn-select-image') }}</span>
+            <a @click="onSubmit(selectedImage)" v-if="selectedImage">{{ $i18n('btn-next') }}</a>
         </div>
         <div class="article-images-thumbs">
             <img class="article-image-thumb"
