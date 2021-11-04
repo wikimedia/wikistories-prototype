@@ -3,8 +3,8 @@
         <Back></Back>
         <div class="article" v-html="currentArticle"></div>
         <div :style="selectionToolbarStyle" class="toolbar">
-            <div @mousedown="onUseText">Highlight</div>
-            <div @click="onDismiss">Clear</div>
+            <div @mousedown="onUseText">{{ $i18n('btn-highlight') }}</div>
+            <div @click="onDismiss">{{ $i18n('btn-clear') }}</div>
         </div>
         <div class="article-overlay" v-if="showImages" @click="dismissImages"></div>
         <ArticleImages :images="articleImages" :onSubmit="onUseImage" v-if="showImages" class="images" />
