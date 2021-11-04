@@ -56,7 +56,6 @@
       onSelectionChange: function () {
         const s = document.getSelection()
         if ( s.isCollapsed ) {
-          this.selectedText = ''
           this.hideSelectionToolbar()
         } else {
           this.selectedText = s.toString()
