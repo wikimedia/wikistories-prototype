@@ -1,5 +1,6 @@
 import { wikiSubdomain } from '@utils/wiki'
 import { strip } from '@utils/strip'
+import { convertUrlToMobile } from '@utils/mobile'
 
 const MAX_FRAMES = 5
 
@@ -90,7 +91,7 @@ export default {
         const { Artist, LicenseShortName } = imageInfo.extmetadata
         const attribution = {
           author: Artist ? strip(Artist.value) : '',
-          url: imageInfo.descriptionshorturl,
+          url: convertUrlToMobile(imageInfo.descriptionshorturl),
           license: LicenseShortName && LicenseShortName.value,
           id: image.id
         }

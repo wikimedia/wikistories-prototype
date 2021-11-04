@@ -1,6 +1,7 @@
 import { request, abortAllRequest } from '@utils/api';
 import { lang } from '@utils/lang'
 import { strip } from '@utils/strip'
+import { convertUrlToMobile } from '@utils/mobile'
 
 // @todo can we merge this store into search.js? it does things similarly
 export default {
@@ -50,7 +51,7 @@ export default {
               width: imageinfo.thumbwidth,
               attribution: {
                 author: Artist ? strip(Artist.value) : '',
-                url: imageinfo.descriptionshorturl,
+                url: convertUrlToMobile(imageinfo.descriptionshorturl),
                 license: LicenseShortName && LicenseShortName.value
               }
             }
