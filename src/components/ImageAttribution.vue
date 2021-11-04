@@ -2,7 +2,7 @@
   <div class="image-attribution" v-if="attributionReady">
     <div class="image-attribution-info">
       <div v-for="license in presentLicenses" :key="license" :class="`image-attribution-info-${license.toLowerCase()}`"></div>
-      <bdi class="image-attribution-info-author" v-html="currentFrame.imgAttribution.author"></bdi>
+      <bdi class="image-attribution-info-author" v-html="currentFrame.imgAttribution.author || $i18n('unknown-author')"></bdi>
     </div>
     <div class="image-attribution-more-info">
       <a :href="currentFrame.imgAttribution.url" class="image-attribution-more-info-link" target="_blank"></a>

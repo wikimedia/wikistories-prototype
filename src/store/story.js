@@ -89,7 +89,7 @@ export default {
       if (imageInfo) {
         const { Artist, LicenseShortName } = imageInfo.extmetadata
         const attribution = {
-          author: Artist ? strip(Artist.value) : 'Unknown author',
+          author: Artist ? strip(Artist.value) : '',
           url: imageInfo.descriptionshorturl,
           license: LicenseShortName && LicenseShortName.value,
           id: image.id

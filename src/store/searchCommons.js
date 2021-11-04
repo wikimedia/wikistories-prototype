@@ -49,7 +49,7 @@ export default {
               thumb: responsiveUrls || imageinfo.url,
               width: imageinfo.thumbwidth,
               attribution: {
-                author: Artist ? strip(Artist.value) : 'Unknown author',
+                author: Artist ? strip(Artist.value) : '',
                 url: imageinfo.descriptionshorturl,
                 license: LicenseShortName && LicenseShortName.value
               }
