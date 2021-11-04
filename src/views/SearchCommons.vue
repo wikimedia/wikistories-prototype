@@ -47,7 +47,7 @@
               img: item.thumb,
               text: item.desc,
               imgTitle: item.title,
-              attribution: null
+              attribution: item.attribution
             }
           })
           this.resetFrame(array)

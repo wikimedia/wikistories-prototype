@@ -39,13 +39,11 @@ export default {
     }
   },
   mounted: function() {
-    const imgAttribution = this.attributionData
-    if (imgAttribution[0].title !== '') {
-      imgAttribution.forEach(e => {
-        if (!e.attribution) {
-          this.fetchImgAttribution({ id: e.id, title: e.title } )
-        }
-      })
+    const imgAttribution = this.attributionData[0]
+    const attributionNeeded = imgAttribution.title !== '' && !imgAttribution.attribution
+
+    if ( attributionNeeded ) {
+      this.fetchImgAttribution({ id: imgAttribution.id, title: imgAttribution.title } )
     }
   }
 }
