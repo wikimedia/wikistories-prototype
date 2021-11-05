@@ -71,7 +71,7 @@
     }
     @keyframes loader {
       0%   {transform: translateX(0px);}
-      50%  {transform: translateX(calc( 100vw - 175px ) );}
+      50%  {transform: translateX(calc( 100% - 175px ) );}
       100% {transform: translateX(0px);}
     }
 </style>

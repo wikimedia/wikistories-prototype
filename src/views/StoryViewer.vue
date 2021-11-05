@@ -64,7 +64,7 @@ export default {
 <style scoped>
   .viewer {
     height: 100%;
-    width: 100vw;
+    width: 100%;
     position: relative;
     text-align: center;
   }
@@ -93,7 +93,7 @@ export default {
   .progress-container {
     display: flex;
     flex-direction: row;
-    width: 100vw;
+    width: 100%;
     padding: 10px 0;
   }
   .progress {
