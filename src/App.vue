@@ -28,14 +28,16 @@ body {
   background-color: black;
   margin: 0;
   padding: 0;
+  text-align: center;
 }
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  margin: 0;
+  margin: 0 auto;
   background-color: white;
-  width: 100vw;
+  width: 100%;
+  max-width: 500px;
   height: 100vh; /* Fallback for browsers that do not support Custom Properties */
   height: calc(var(--vh, 1vh) * 100);
   overflow: hidden;
