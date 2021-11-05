@@ -28,7 +28,6 @@ body {
   background-color: black;
   margin: 0;
   padding: 0;
-  text-align: center;
 }
 #app {
   -webkit-font-smoothing: antialiased;
