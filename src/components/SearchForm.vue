@@ -71,7 +71,17 @@
     }
     @keyframes loader {
       0%   {transform: translateX(0px);}
-      50%  {transform: translateX(calc( 100vw - 175px ) );}
+      50%  {transform: translateX(calc( 100vw - 175px ));}
       100% {transform: translateX(0px);}
+    }
+    @keyframes loader-desktop {
+      0%   {transform: translateX(0px);}
+      50%  {transform: translateX(calc( 500px - 175px ));}
+      100% {transform: translateX(0px);}
+    }
+    @media screen and (min-width: 500px) {
+      .loading-bar {
+        animation-name: loader-desktop;
+      }
     }
 </style>

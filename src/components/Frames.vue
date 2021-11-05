@@ -20,7 +20,7 @@
 </script>
 <style>
     .frames {
-        width: 100vw;
+        width: 100%;
         padding: 14px 0;
         display: flex;
         flex-direction: row;
