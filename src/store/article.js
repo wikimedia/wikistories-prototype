@@ -26,16 +26,16 @@ const transforms = {
     }
   },
   'load images': doc => {
-    for (const f of doc.querySelectorAll('figure')) {
-      let s = f.querySelector('span[data-src]')
+    for (const s of doc.querySelectorAll('span[data-src]')) {
+      // let s = f.querySelector('span[data-src]')
       if (s) {
         let img = doc.createElement('img')
         img.src = s.getAttribute('data-src')
         img.classList.add('pcs-widen-image-override')
         img.classList.add('pcs-lazy-load-image-loaded')
-        f.replaceChildren(img)
+        s.replaceChildren(img)
       } else {
-        f.remove()
+        s.remove()
       }
     }
   }
