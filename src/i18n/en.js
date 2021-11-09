@@ -7,7 +7,6 @@ export default {
   'search-media-info': '$1 selected',
   'wikimedia-commons': 'Commons',
   'wikipedia': 'Wikipedia',
-  'btn-publish': 'Publish',
   'btn-publish-wikistory': 'Publish Wikistory',
   'btn-highlight': 'Highlight',
   'btn-clear': 'Clear',
