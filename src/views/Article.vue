@@ -104,7 +104,8 @@
 
     .toolbar > div {
         flex: auto;
-        margin: 10px;
+        margin: 0;
+        padding: 10px;
         color: white;
         cursor: pointer;
         text-align: center;
