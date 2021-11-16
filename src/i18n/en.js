@@ -15,5 +15,6 @@ export default {
   'publish-date': 'Date',
   'publish-tags': 'Tags',
   'publish-language': 'Language',
-  'tags-not-set': 'Not set yet'
+  'tags-not-set': 'Not set yet',
+  'unknown-author': 'Author unknown'
 }

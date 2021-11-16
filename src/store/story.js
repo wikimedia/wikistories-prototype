@@ -1,3 +1,7 @@
+import { wikiSubdomain } from '@utils/wiki'
+import { strip } from '@utils/strip'
+import { convertUrlToMobile } from '@utils/mobile'
+
 const MAX_FRAMES = 5
 
 const makeFrameStyle = f => {
@@ -19,7 +23,9 @@ export default {
       {
         id: 1,
         img: null,
-        text: ''
+        text: '',
+        imgTitle: '',
+        attribution: null
       }
     ]
   },
@@ -30,7 +36,7 @@ export default {
         return
       }
       const newId = state.frames.length + 1
-      state.frames.push({text:'', img: '', id: newId})
+      state.frames.push({text:'', img: '', imgTitle: '', id: newId, attribution: null})
       state.currentFrameId = newId
     },
     resetFrame: (state, array) => {
@@ -44,6 +50,14 @@ export default {
     setImg: (state, img) => {
       const f = state.frames.find(f => f.id === state.currentFrameId)
       f.img = img
+    },
+    setImgTitle: (state, title) => {
+      const f = state.frames.find(f => f.id === state.currentFrameId)
+      f.imgTitle = title
+    },
+    setImgAttribution: (state, attribution) => {
+      const f = state.frames.find(f => f.id === attribution.id)
+      f.attribution = attribution
     },
     setCreationDate: (state, date) => {
       state.creationDate = date;
@@ -64,6 +78,25 @@ export default {
     },
     setImg: ({commit}, img) => {
       commit('setImg', img)
+    },
+    setImgTitle: ({commit}, title) => {
+      commit('setImgTitle', title)
+    },
+    fetchImgAttribution: async ({commit}, image) => {
+      const url = `https://${wikiSubdomain}.wikipedia.org/w/api.php?format=json&formatversion=2&origin=*&action=query&prop=imageinfo&iiextmetadatafilter=License%7CLicenseShortName%7CImageDescription%7CArtist&iiextmetadatalanguage=en&iiextmetadatamultilang=1&iiprop=url%7Cextmetadata&titles=${encodeURIComponent(image.title)}`
+      const rawAttribution = await (await fetch(url)).text()
+      const parsedAttribution = JSON.parse(rawAttribution)
+      const imageInfo = parsedAttribution.query.pages[ 0 ].imageinfo[0]
+      if (imageInfo) {
+        const { Artist, LicenseShortName } = imageInfo.extmetadata
+        const attribution = {
+          author: Artist ? strip(Artist.value) : '',
+          url: convertUrlToMobile(imageInfo.descriptionshorturl),
+          license: LicenseShortName && LicenseShortName.value,
+          id: image.id
+        }
+        commit('setImgAttribution', attribution)
+      }
     },
     setCreationDate: ({commit}) => {
       commit('setCreationDate', (new Date()).getTime())
@@ -86,7 +119,9 @@ export default {
         text: f.text,
         style: makeFrameStyle(f),
         noImage: f.img === '',
-        id: state.currentFrameId
+        id: state.currentFrameId,
+        imgAttribution: f.attribution,
+        imgTitle: f.imgTitle
       }
     },
     storyLength: state => state.frames.length,
@@ -98,6 +133,15 @@ export default {
     },
     valid: (state) => {
       return state.frames.length >= 2 && state.frames.every( f => f.img && f.text )
+    },
+    attributionData: (state) => {
+      return state.frames.map(f => {
+        return {
+          id: f.id,
+          title: f.imgTitle,
+          attribution: f.attribution
+        }
+      })
     }
   }
 }

@@ -1,4 +1,5 @@
 import { wikiSubdomain } from '@utils/wiki'
+import { request } from '@utils/api'
 
 const transforms = {
   'put styles in body': doc => {
@@ -52,6 +53,9 @@ export default {
     setArticle: ({ article }, { title, html }) => {
       article.title = title
       article.html = html
+    },
+    setArticleMedia: ({ article }, { media }) => {
+      article.media = media
     }
   },
   actions: {
@@ -61,9 +65,25 @@ export default {
       const doc = new DOMParser().parseFromString(article, 'text/html')
       Object.values(transforms).forEach(t => t(doc))
       commit('setArticle', { title, html: doc.body.outerHTML })
+    },
+    fetchArticleMedia: ({commit}, title) => {
+      const url = `https://${wikiSubdomain}.wikipedia.org/api/rest_v1/page/media-list/${encodeURIComponent( title )}`
+      request(url, mediaData => {
+        const pageMedia = mediaData.items.reduce((mediaArray, item)=>{
+          if ( item.showInGallery && item.type === 'image' ) {
+            return mediaArray.concat(item)  
+          }
+          return mediaArray
+        },[])
+        
+        
+        if (pageMedia) {
+          commit('setArticleMedia', { media: pageMedia })
+        }
+      })
     }
   },
   getters: {
-    currentArticle: ({ article }) => article.html
+    currentArticle: ({ article }) => article
   }
 }

@@ -1,13 +1,18 @@
 <template>
     <div class="current-frame" :style="currentFrame.style">
         <p v-if="currentFrame.text" v-html="currentFrame.text"></p>
+        <ImageAttribution />
     </div>
 </template>
 
 <script>
     import { mapGetters } from 'vuex'
+    import ImageAttribution from '@components/ImageAttribution.vue'
     export default {
         name: 'CurrentFrame',
+        components: {
+            ImageAttribution
+        },
         computed: mapGetters(['currentFrame'])
     }
 </script>
@@ -21,7 +26,7 @@
     }
     p {
         position: absolute;
-        bottom: 20px;
+        bottom: 60px;
         left: 20px;
         right: 20px;
         border-radius: 10px;

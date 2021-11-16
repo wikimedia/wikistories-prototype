@@ -7,12 +7,14 @@
       </div>
     </div>
     <div class="story-text" v-if="currentFrame.text" v-html="currentFrame.text"></div>
+    <ImageAttribution />
     <div class="restart-btn" v-if="storyEnd" @click="restartStory">{{ $i18n('btn-restart-story') }}</div>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import ImageAttribution from '@components/ImageAttribution.vue'
 export default {
   name: 'StoryViewer',
   data: () => {
@@ -20,6 +22,9 @@ export default {
       frameDuration: 2000,
       storyEnd: false
     }
+  },
+  components: {
+    ImageAttribution
   },
   computed: mapGetters(['currentFrame', 'storyLength']),
   methods: {
@@ -70,7 +75,7 @@ export default {
   }
   .story-text {
     position: absolute;
-    bottom: 80px;
+    bottom: 90px;
     left: 20px;
     right: 20px;
     border-radius: 10px;
@@ -80,7 +85,7 @@ export default {
   }
   .restart-btn {
     position: absolute;
-    bottom: 20px;
+    bottom: 40px;
     left: 0px;
     right: 0px;
     margin: auto;

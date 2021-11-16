@@ -6,10 +6,10 @@
         </div>
         <div class="article-images-thumbs">
             <img class="article-image-thumb"
-                 v-for="img in images" :key="img.src"
+                 v-for="img in images" :key="img.id"
                  :src="img.src"
-                 @click="selectImage(img.src)"
-                 :class="{selected: selectedImage === img.src}"
+                 @click="selectImage(img)"
+                 :class="{selected: selectedImage === img}"
             />
         </div>
     </div>
@@ -22,8 +22,8 @@
         return { selectedImage: null }
       },
       methods: {
-        selectImage: function ( src ) {
-          this.selectedImage = src
+        selectImage: function ( img ) {
+          this.selectedImage = img
         }
       }
     }

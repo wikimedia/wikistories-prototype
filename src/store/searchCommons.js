@@ -1,5 +1,7 @@
 import { request, abortAllRequest } from '@utils/api';
 import { lang } from '@utils/lang'
+import { strip } from '@utils/strip'
+import { convertUrlToMobile } from '@utils/mobile'
 
 // @todo can we merge this store into search.js? it does things similarly
 export default {
@@ -40,12 +42,18 @@ export default {
             const responsiveUrls = imageinfo.responsiveUrls && Object.values( imageinfo.responsiveUrls )[0]
             const extmetadata = imageinfo.extmetadata
             const description = extmetadata && extmetadata.ImageDescription && extmetadata.ImageDescription.value
+            const { Artist, LicenseShortName } = imageinfo.extmetadata
             return {
               id: p.pageid.toString(),
               title: p.title,
               desc: description || p.snippet,
               thumb: responsiveUrls || imageinfo.url,
-              width: imageinfo.thumbwidth
+              width: imageinfo.thumbwidth,
+              attribution: {
+                author: Artist ? strip(Artist.value) : '',
+                url: convertUrlToMobile(imageinfo.descriptionshorturl),
+                license: LicenseShortName && LicenseShortName.value
+              }
             }
           }))
         }

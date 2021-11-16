@@ -1,7 +1,7 @@
 <template>
     <div class="view">
         <Back></Back>
-        <div class="article" v-html="currentArticle"></div>
+        <div class="article" v-html="currentArticle.html"></div>
         <div :style="selectionToolbarStyle" class="toolbar">
             <div @mousedown="onUseText">{{ $i18n('btn-highlight') }}</div>
             <div @click="onDismiss">{{ $i18n('btn-clear') }}</div>
@@ -32,16 +32,17 @@
     },
     computed: {
       ...mapGetters( ['currentArticle'] ),
-      articleImages: () => {
-        return Array.from(document.querySelector('.article').querySelectorAll(('img'))).map(img => {
+      articleImages: function() {
+        return this.currentArticle.media.map((img, index) => {
           return {
-            src: img.src
+            src: img.srcset[0].src,
+            id: index
           }
         })
       }
     },
     methods: {
-      ...mapActions( ['fetchArticle', 'setText', 'setImg'] ),
+      ...mapActions( ['fetchArticle', 'fetchArticleMedia', 'setText', 'setImg', 'setImgTitle'] ),
       setToolbarDisplay: function (display) {
         if ( this.selectionToolbarStyle.display !== display ) {
           this.selectionToolbarStyle.display = display
@@ -68,8 +69,10 @@
         this.showImages = true
       },
       onUseImage: function(img) {
+        const imageTitle = this.currentArticle.media[img.id].title
+        this.setImgTitle(imageTitle)
         this.setText( this.selectedText )
-        this.setImg(img)
+        this.setImg(img.src)
         this.$router.push( { name: 'Story' } )
       },
       dismissImages: function () {
@@ -81,6 +84,7 @@
     },
     created: function () {
       this.fetchArticle( this.article )
+      this.fetchArticleMedia( this.article )
     },
     mounted() {
       document.addEventListener( 'selectionchange', this.onSelectionChange )
