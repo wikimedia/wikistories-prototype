@@ -3,7 +3,7 @@
         <Back></Back>
         <div class="article" v-html="currentArticle"></div>
         <div :style="selectionToolbarStyle" class="toolbar">
-            <div @touchstart="onUseText">{{ $i18n('btn-highlight') }}</div>
+            <div @touchstart="onUseText" @mousedown="onUseText">{{ $i18n('btn-highlight') }}</div>
             <div @click="onDismiss">{{ $i18n('btn-clear') }}</div>
         </div>
         <div class="article-overlay" v-if="showImages" @click="dismissImages"></div>
