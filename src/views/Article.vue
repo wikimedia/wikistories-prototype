@@ -101,13 +101,12 @@
         opacity: 0.75;
         bottom: 0;
         width: 100%;
-        line-height: 4em;
     }
 
     .toolbar > div {
         flex: auto;
         margin: 0;
-        padding: 0;
+        padding: 10px;
         color: white;
         cursor: pointer;
         text-align: center;
