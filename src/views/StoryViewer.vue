@@ -19,7 +19,7 @@ export default {
   name: 'StoryViewer',
   data: () => {
     return {
-      frameDuration: 2000,
+      frameDuration: 7000,
       storyEnd: false
     }
   },
@@ -116,7 +116,7 @@ export default {
     animation-iteration-count: 1;
     /* TODO - ideally the animation duration is
     set as var related to frameDuration  */
-    animation-duration: 2s; 
+    animation-duration: 7s;
   }
   .progress .loaded {
     height: 100%;
