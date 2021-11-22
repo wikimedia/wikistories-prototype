@@ -8,7 +8,7 @@ const transforms = {
     }
   },
   'remove stuff': doc => {
-    const stuffToRemove = ['table', '.pcs-collapse-table-container', 'script']
+    const stuffToRemove = ['table', '.pcs-collapse-table-container', 'script', 'sup']
     for (const n of doc.querySelectorAll(stuffToRemove.join(','))) {
       n.remove()
     }
