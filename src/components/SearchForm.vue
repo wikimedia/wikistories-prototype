@@ -12,7 +12,7 @@
         name: 'SearchForm',
         props: [ 'label', 'placeholder', 'query', 'loading', 'onInput', 'onClear'],
         methods: {
-          onSubmit: e => e.preventDefault
+          onSubmit: e => e.preventDefault()
         }
     }
 </script>
