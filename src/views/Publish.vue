@@ -2,7 +2,7 @@
     <div class="view publish">
         <Navigator :onBack="() => this.$router.push( { name: 'Story' } )" />
         <div class="header">
-            <h2 class="title" v-html="storyInfo.title"></h2>
+            <h2 class="title" v-html="title" contenteditable="true" placeholder="Give your story a title"></h2>
             <div class="img-preview" :style="imgSyle"></div>
         </div>
         <div class="main">
@@ -30,6 +30,11 @@
 
     export default {
         name: 'Publish',
+        data: () => {
+            return {
+                title: null
+            }
+        },
         components: { Navigator, PrimaryButton },
         methods: {
             onPublish: function() {
@@ -70,6 +75,10 @@
         color: #333333;
         margin-right: auto;
         overflow: hidden;
+    }
+    .header .title:empty:before {
+        content: attr(placeholder);
+        color: #828282;
     }
     .header .img-preview {
         height: 64px;
