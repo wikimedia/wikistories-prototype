@@ -12,6 +12,8 @@ export default {
   'btn-clear': 'Hapus pilihan',
   'btn-select-image': 'Pilih gambar',
   'btn-next': 'Lanjut',
+  'publish-edit-title-placeholder': 'Beri judul ceritamu',
+  'publish-edit-error-msg': 'Masukkan judul cerita',
   'publish-date': 'Tanggal',
   'publish-tags': 'Tags',
   'publish-language': 'Bahasa',
