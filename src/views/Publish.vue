@@ -97,7 +97,7 @@
         line-height: 31px;
         color: #333333;
         margin-right: auto;
-        overflow: hidden;
+        overflow: auto;
     }
     .header .title:empty:before {
         content: attr(placeholder);
