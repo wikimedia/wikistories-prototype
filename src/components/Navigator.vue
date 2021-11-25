@@ -41,8 +41,8 @@
     }
     .navigator .next {
       position: absolute;
-      width: 16px;
-      height: 16px;
+      min-width: 16px;
+      min-height: 16px;
       right: 0;
       margin: 20px;
       cursor: pointer;
