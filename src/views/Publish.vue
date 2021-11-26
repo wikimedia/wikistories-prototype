@@ -50,7 +50,7 @@
                 }
             },
             onInput(event) {
-                this.title = event.target.innerText; // @todo title being set in storyInfo
+                this.title = event.target.innerText;
                 if ( this.isFormError !== null) {
                     this.isFormError = !this.title.trim()
                 }  

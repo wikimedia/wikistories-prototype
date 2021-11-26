@@ -16,11 +16,10 @@ const makeFrameStyle = f => {
 
 export default {
   state: {
-    storyTitle: '',
     creationDate: null,
     currentFrameId: 1,
     frames: [
-      {
+      { // cover frame
         id: 0,
         img: null,
         text: '',
@@ -144,7 +143,6 @@ export default {
     storyLength: state => state.frames.length,
     storyInfo: (state) => {
       return {
-        title: state.storyTitle,
         creationDate: state.creationDate
       }
     },
@@ -153,7 +151,7 @@ export default {
       return frameExceptCover.length >= 2 && frameExceptCover.every( f => f.img && f.text )
     },
     attributionData: (state) => {
-      return state.frames.filter(f=>f.id!==0).map(f => {
+      return state.frames.map(f => {
         return {
           id: f.id,
           title: f.imgTitle,
