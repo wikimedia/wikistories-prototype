@@ -2,7 +2,7 @@ import { wikiSubdomain } from '@utils/wiki'
 import { strip } from '@utils/strip'
 import { convertUrlToMobile } from '@utils/mobile'
 
-const MAX_FRAMES = 5
+const MAX_FRAMES = 6
 
 const makeFrameStyle = f => {
   return f.img ?
@@ -21,6 +21,13 @@ export default {
     currentFrameId: 1,
     frames: [
       {
+        id: 0,
+        img: null,
+        text: '',
+        imgTitle: '',
+        attribution: null
+      },
+      {
         id: 1,
         img: null,
         text: '',
@@ -35,13 +42,13 @@ export default {
       if (state.frames.length === MAX_FRAMES) {
         return
       }
-      const newId = state.frames.length + 1
+      const newId = state.frames.length
       state.frames.push({text:'', img: '', imgTitle: '', id: newId, attribution: null})
       state.currentFrameId = newId
     },
     resetFrame: (state, array) => {
       state.currentFrameId = array.length
-      state.frames = array
+      state.frames = [ state.frames[0], ...array ]
     },
     setText: (state, text) => {
       const f = state.frames.find(f => f.id === state.currentFrameId)
@@ -61,6 +68,13 @@ export default {
     },
     setCreationDate: (state, date) => {
       state.creationDate = date;
+    },
+    updateCover: (state, title) => {
+      const f = state.frames.find(f => f.id === 0);
+      f.text = title;
+      f.imgTitle = title;
+      f.img = state.frames[1].img;
+      f.attribution = state.frames[1].attribtion;
     }
   },
   actions: {
@@ -81,6 +95,9 @@ export default {
     },
     setImgTitle: ({commit}, title) => {
       commit('setImgTitle', title)
+    },
+    updateCover: ({commit}, title) => {
+      commit('updateCover', title )
     },
     fetchImgAttribution: async ({commit}, image) => {
       const url = `https://${wikiSubdomain}.wikipedia.org/w/api.php?format=json&formatversion=2&origin=*&action=query&prop=imageinfo&iiextmetadatafilter=License%7CLicenseShortName%7CImageDescription%7CArtist&iiextmetadatalanguage=en&iiextmetadatamultilang=1&iiprop=url%7Cextmetadata&titles=${encodeURIComponent(image.title)}`
@@ -104,7 +121,7 @@ export default {
   },
   getters: {
     thumbnails: (state) => {
-      return state.frames.map(f => {
+      return state.frames.filter(f=>f.id!==0).map(f => {
         const newFrame = {...f}
         if (f.id === state.currentFrameId) {
           newFrame.selected = true
@@ -132,10 +149,11 @@ export default {
       }
     },
     valid: (state) => {
-      return state.frames.length >= 2 && state.frames.every( f => f.img && f.text )
+      const frameExceptCover = state.frames.filter( f => f.id !== 0 )
+      return frameExceptCover.length >= 2 && frameExceptCover.every( f => f.img && f.text )
     },
     attributionData: (state) => {
-      return state.frames.map(f => {
+      return state.frames.filter(f=>f.id!==0).map(f => {
         return {
           id: f.id,
           title: f.imgTitle,

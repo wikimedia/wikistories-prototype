@@ -25,7 +25,7 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
+    import { mapActions, mapGetters } from 'vuex'
     import PrimaryButton from '@components/PrimaryButton.vue'
     import Navigator from '@components/Navigator.vue'
 
@@ -39,8 +39,10 @@
             }
         },
         methods: {
+            ...mapActions(['updateCover']),
             onPublish: function() {
                 if ( this.title.trim() ) {
+                    this.updateCover( this.title.trim() );
                     this.$router.push( { name: 'StoryViewer' } );
                 } else {
                     this.$refs.title.focus()

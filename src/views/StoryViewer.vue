@@ -2,8 +2,8 @@
   <div class="viewer" :style="currentFrame.style">
     <div class="progress-container">
       <div v-for="n in storyLength" :key="n" class="progress">
-        <div v-if="currentFrame.id === n" class="loading"></div>
-        <div v-else-if="currentFrame.id > n" class="loaded"></div>
+        <div v-if="currentFrame.id === ( n - 1 )" class="loading"></div>
+        <div v-else-if="currentFrame.id > ( n - 1 )" class="loaded"></div>
       </div>
     </div>
     <div class="story-text" v-if="currentFrame.text" v-html="currentFrame.text"></div>
@@ -37,7 +37,7 @@ export default {
     },
     restartStory: function() {
       this.storyEnd = false
-      this.selectFrame(1)
+      this.selectFrame(0)
     },
     endStory: function() {
       const timeoutId = setTimeout( ()=> {
@@ -47,17 +47,17 @@ export default {
     }
   },
   beforeMount: function() {
-    if (this.currentFrame.id > 1) {
+    if (this.currentFrame.id > 0) {
       this.restartStory()
     }
   },
   mounted: function() {
-    if (this.currentFrame.id < this.storyLength) {
+    if (this.currentFrame.id < this.storyLength - 1) {
       this.playNextFrame()
     }
   },
   updated: function() {
-    if (this.currentFrame.id < this.storyLength) {
+    if (this.currentFrame.id < this.storyLength -1) {
       this.playNextFrame()
     } else if(!this.storyEnd) {
       this.endStory()

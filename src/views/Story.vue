@@ -35,7 +35,7 @@ export default {
   computed: {
     ...mapGetters(['currentFrame', 'storyLength', 'valid', 'attributionData']),
     canPublish: function () {
-      return this.valid && this.currentFrame.id === this.storyLength
+      return this.valid && this.currentFrame.id === this.storyLength - 1
     }
   },
   mounted: function() {
