@@ -89,6 +89,11 @@ export default {
     bottom: 72px;
     color: #fff;
     background-color: unset;
+    padding: unset;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
   }
   .restart-btn {
     position: absolute;
