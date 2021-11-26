@@ -74,7 +74,7 @@ export default {
       f.text = title;
       f.imgTitle = title;
       f.img = state.frames[1].img;
-      f.attribution = state.frames[1].attribtion;
+      f.attribution = state.frames[1].attribution;
     }
   },
   actions: {

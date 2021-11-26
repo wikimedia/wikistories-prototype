@@ -6,7 +6,7 @@
         <div v-else-if="currentFrame.id > ( n - 1 )" class="loaded"></div>
       </div>
     </div>
-    <div class="story-text" v-if="currentFrame.text" v-html="currentFrame.text"></div>
+    <div :class="{'story-text': true, 'cover': currentFrame.id === 0}" v-if="currentFrame.text" v-html="currentFrame.text"></div>
     <ImageAttribution />
     <div class="restart-btn" v-if="storyEnd" @click="restartStory">{{ $i18n('btn-restart-story') }}</div>
   </div>
@@ -82,6 +82,13 @@ export default {
     background-color: white;
     margin: 0;
     padding: 10px;
+  }
+  .story-text.cover {
+    font-size: 32px;
+    line-height: 36px;
+    bottom: 72px;
+    color: #fff;
+    background-color: unset;
   }
   .restart-btn {
     position: absolute;

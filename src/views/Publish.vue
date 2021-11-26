@@ -1,7 +1,7 @@
 <template>
     <div class="view publish">
         <Navigator :onBack="() => this.$router.push( { name: 'Story' } )" />
-        <div :class="`header ${isFormError?'error':''}`">
+        <div :class="{ header:true, error: isFormError }">
             <h2 class="title" ref="title" contenteditable="true" :placeholder="$i18n('publish-edit-title-placeholder')" @input="onInput" autofocus />
             <div class="img-preview" :style="imgSyle"></div>
             <p v-if="isFormError" class="msg">{{ $i18n('publish-edit-error-msg')}}</p>
