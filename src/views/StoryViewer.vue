@@ -1,5 +1,5 @@
 <template>
-  <div class="viewer" :style="currentFrame.style" @click="handlePause">
+  <div class="viewer" :style="currentFrame.style" @mousedown="handlePause" @touchstart="beginPause" @touchend="endPause">
     <div class="progress-container">
       <div v-for="n in storyLength" :key="n" class="progress">
         <div v-if="currentFrame.id === n && !isPaused" class="loading"></div>
@@ -143,7 +143,7 @@ export default {
   .progress .paused {
     height: 100%;
     width: 50%;
-    background-color: #C4C4C4;
+    background-color: #FFFFFF;
   }
   .progress .loaded {
     height: 100%;
