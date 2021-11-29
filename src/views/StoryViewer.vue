@@ -1,8 +1,9 @@
 <template>
-  <div class="viewer" :style="currentFrame.style">
+  <div class="viewer" :style="currentFrame.style" @click="handlePause">
     <div class="progress-container">
       <div v-for="n in storyLength" :key="n" class="progress">
-        <div v-if="currentFrame.id === n" class="loading"></div>
+        <div v-if="currentFrame.id === n && !isPaused" class="loading"></div>
+        <div v-else-if="currentFrame.id === n && isPaused" class="paused"></div>
         <div v-else-if="currentFrame.id > n" class="loaded"></div>
       </div>
     </div>
@@ -20,7 +21,9 @@ export default {
   data: () => {
     return {
       frameDuration: 2000,
-      storyEnd: false
+      storyEnd: false,
+      currentTimeout: null,
+      isPaused: false
     }
   },
   components: {
@@ -30,9 +33,9 @@ export default {
   methods: {
     ...mapActions(['selectFrame']),
     playNextFrame: function() {
-      const timeoutId = setTimeout( () => {
+      this.currentTimeout = setTimeout( () => {
         this.selectFrame(this.currentFrame.id + 1)
-        clearTimeout(timeoutId)
+        clearTimeout(this.currentTimeout)
       }, this.frameDuration)
     },
     restartStory: function() {
@@ -40,10 +43,29 @@ export default {
       this.selectFrame(1)
     },
     endStory: function() {
-      const timeoutId = setTimeout( ()=> {
+      this.currentTimeout = setTimeout( ()=> {
         this.storyEnd = true
-        clearTimeout(timeoutId)
+        clearTimeout(this.currentTimeout)
       }, this.frameDuration)
+    },
+    beginPause: function() {
+      console.log('beginPause');
+      this.isPaused = true
+      clearTimeout(this.currentTimeout)
+      this.currentTimeout = null
+    },
+    endPause: function() {
+      console.log('endPause');
+      this.isPaused = false
+    },
+    handlePause: function(e) {
+      console.log('handlePause - e...', e);
+      const invalidClick = e.target.className === 'restart-btn'
+      if ( !this.isPaused && !invalidClick ) {
+        this.beginPause()
+      } else {
+        this.endPause()
+      }
     }
   },
   beforeMount: function() {
@@ -57,9 +79,9 @@ export default {
     }
   },
   updated: function() {
-    if (this.currentFrame.id < this.storyLength) {
+    if (this.currentFrame.id < this.storyLength && !this.isPaused) {
       this.playNextFrame()
-    } else if(!this.storyEnd) {
+    } else if(!this.storyEnd && !this.isPaused) {
       this.endStory()
     }
   }
@@ -117,6 +139,11 @@ export default {
     /* TODO - ideally the animation duration is
     set as var related to frameDuration  */
     animation-duration: 2s; 
+  }
+  .progress .paused {
+    height: 100%;
+    width: 50%;
+    background-color: #C4C4C4;
   }
   .progress .loaded {
     height: 100%;
