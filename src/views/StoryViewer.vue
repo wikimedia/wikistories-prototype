@@ -2,8 +2,7 @@
   <div class="viewer" :style="currentFrame.style" @mousedown="handlePause" @touchstart="beginPause" @touchend="endPause">
     <div class="progress-container">
       <div v-for="n in storyLength" :key="n" class="progress">
-        <div v-if="currentFrame.id === n && !isPaused" class="loading"></div>
-        <div v-else-if="currentFrame.id === n && isPaused" class="paused"></div>
+        <div v-if="currentFrame.id === n" :class="{ loading: true, paused: isPaused}"></div>
         <div v-else-if="currentFrame.id > n" class="loaded"></div>
       </div>
     </div>
@@ -21,6 +20,8 @@ export default {
   data: () => {
     return {
       frameDuration: 2000,
+      frameStarting: null,
+      frameRemaining: null,
       storyEnd: false,
       currentTimeout: null,
       isPaused: false
@@ -32,28 +33,33 @@ export default {
   computed: mapGetters(['currentFrame', 'storyLength']),
   methods: {
     ...mapActions(['selectFrame']),
-    playNextFrame: function() {
+    setFrameTimeout: function(f) {
+      const duration = this.frameRemaining ? this.frameRemaining : this.frameDuration
       this.currentTimeout = setTimeout( () => {
-        this.selectFrame(this.currentFrame.id + 1)
+        f()
         clearTimeout(this.currentTimeout)
-      }, this.frameDuration)
+        this.frameRemaining = null
+      }, duration)
+      this.frameStarting = new Date()
+    },
+    playNextFrame: function() {
+      const playNext = () => this.selectFrame(this.currentFrame.id + 1)
+      this.setFrameTimeout(playNext)
     },
     restartStory: function() {
       this.storyEnd = false
       this.selectFrame(1)
     },
     endStory: function() {
-      this.currentTimeout = setTimeout( ()=> {
-        this.storyEnd = true
-        clearTimeout(this.currentTimeout)
-      }, this.frameDuration)
+      const end = () => this.storyEnd = true
+      this.setFrameTimeout(end)
     },
     isPauseAction: function(e) {
       const invalidClick = e.target.className === 'restart-btn'
       return !invalidClick && !this.storyEnd
     },
     beginPause: function(e) {
-      console.log('beginPause');
+      this.frameRemaining = new Date() - this.frameStarting
       if (this.isPauseAction(e)) {
         e.preventDefault()
         e.stopPropagation()
@@ -63,7 +69,6 @@ export default {
       }
     },
     endPause: function(e) {
-      console.log('endPause');
       if (this.isPauseAction(e)) {
         e.preventDefault()
         e.stopPropagation()
@@ -149,9 +154,7 @@ export default {
     animation-duration: 2s; 
   }
   .progress .paused {
-    height: 100%;
-    width: 50%;
-    background-color: #FFFFFF;
+    animation-play-state: paused;
   }
   .progress .loaded {
     height: 100%;
