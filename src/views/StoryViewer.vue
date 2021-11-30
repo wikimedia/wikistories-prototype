@@ -48,23 +48,31 @@ export default {
         clearTimeout(this.currentTimeout)
       }, this.frameDuration)
     },
-    beginPause: function() {
-      console.log('beginPause');
-      this.isPaused = true
-      clearTimeout(this.currentTimeout)
-      this.currentTimeout = null
+    isPauseAction: function(e) {
+      const invalidClick = e.target.className === 'restart-btn'
+      return !invalidClick && !this.storyEnd
     },
-    endPause: function() {
+    beginPause: function(e) {
+      console.log('beginPause');
+      if (this.isPauseAction(e)) {
+        e.preventDefault()
+        e.stopPropagation()
+        this.isPaused = true
+        clearTimeout(this.currentTimeout)
+        this.currentTimeout = null
+      }
+    },
+    endPause: function(e) {
       console.log('endPause');
-      this.isPaused = false
+      if (this.isPauseAction(e)) {
+        e.preventDefault()
+        e.stopPropagation()
+        this.isPaused = false
+      }
     },
     handlePause: function(e) {
-      console.log('handlePause - e...', e);
-      const invalidClick = e.target.className === 'restart-btn'
-      if ( !this.isPaused && !invalidClick ) {
-        this.beginPause()
-      } else {
-        this.endPause()
+      if (this.isPauseAction(e)) {
+        this.isPaused ? this.endPause(e) : this.beginPause(e)
       }
     }
   },
