@@ -2,7 +2,7 @@
   <div class="viewer" :style="currentFrame.style" @mousedown="handlePause" @touchstart="beginPause" @touchend="endPause">
     <div class="progress-container">
       <div v-for="n in storyLength" :key="n" class="progress">
-        <div v-if="currentFrame.id === n" :class="{ loading: true, paused: isPaused}"></div>
+        <div v-if="currentFrame.id === n" :class="{ loading: true, paused: isPaused}" :style="{ animationDuration: animationDuration }"></div>
         <div v-else-if="currentFrame.id > n" class="loaded"></div>
       </div>
     </div>
@@ -19,7 +19,7 @@ export default {
   name: 'StoryViewer',
   data: () => {
     return {
-      frameDuration: 2000,
+      frameDuration: 6000,
       frameStarting: null,
       frameRemaining: null,
       storyEnd: false,
@@ -30,7 +30,12 @@ export default {
   components: {
     ImageAttribution
   },
-  computed: mapGetters(['currentFrame', 'storyLength']),
+  computed: {
+    ...mapGetters(['currentFrame', 'storyLength']),
+    animationDuration: function () {
+      return this.frameDuration / 1000 + 's'
+    }
+  },
   methods: {
     ...mapActions(['selectFrame']),
     setFrameTimeout: function(f) {
@@ -49,6 +54,7 @@ export default {
     restartStory: function() {
       this.storyEnd = false
       this.selectFrame(1)
+      this.frameRemaining = null
     },
     endStory: function() {
       const end = () => this.storyEnd = true
@@ -63,9 +69,9 @@ export default {
       if (this.isPauseAction(e)) {
         e.preventDefault()
         e.stopPropagation()
-        this.isPaused = true
         clearTimeout(this.currentTimeout)
         this.currentTimeout = null
+        this.isPaused = true
       }
     },
     endPause: function(e) {
@@ -149,9 +155,6 @@ export default {
     background-color: #FFFFFF;
     animation-name: loading;
     animation-iteration-count: 1;
-    /* TODO - ideally the animation duration is
-    set as var related to frameDuration  */
-    animation-duration: 2s; 
   }
   .progress .paused {
     animation-play-state: paused;
