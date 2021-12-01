@@ -12,6 +12,8 @@ export default {
   'btn-clear': 'Annuler',
   'btn-select-image': 'Selectionnez une image',
   'btn-next': 'Suivant',
+  'publish-edit-title-placeholder': 'Donnez un title à votre histoire',
+  'publish-edit-error-msg': 'Veuillez entrer un title pour votre histoire',
   'publish-date': 'Date',
   'publish-tags': 'Mots clés',
   'publish-language': 'Langue',

@@ -12,6 +12,8 @@ export default {
   'btn-clear': 'Cancelar',
   'btn-select-image': 'Selecciona una imagen',
   'btn-next': 'Sigue',
+  'publish-edit-title-placeholder': 'Ponle un titulo a tu historia',
+  'publish-edit-error-msg': 'Agregar titulo',
   'publish-date': 'Fecha',
   'publish-tags': 'Etiquetas',
   'publish-language': 'Idioma',
