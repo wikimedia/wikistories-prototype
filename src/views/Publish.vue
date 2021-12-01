@@ -39,10 +39,10 @@
             }
         },
         methods: {
-            ...mapActions(['updateCover']),
+            ...mapActions(['updateStoryTitle']),
             onPublish: function() {
                 if ( this.title.trim() ) {
-                    this.updateCover( this.title.trim() );
+                    this.updateStoryTitle( this.title.trim() );
                     this.$router.push( { name: 'StoryViewer' } );
                 } else {
                     this.$refs.title.focus()

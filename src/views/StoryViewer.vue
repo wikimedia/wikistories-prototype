@@ -1,7 +1,7 @@
 <template>
   <div class="viewer" :style="currentFrame.style">
     <div class="progress-container">
-      <div v-for="n in storyLength" :key="n" class="progress">
+      <div v-for="n in storyViewerLength" :key="n" class="progress">
         <div v-if="currentFrame.id === ( n - 1 )" class="loading"></div>
         <div v-else-if="currentFrame.id > ( n - 1 )" class="loaded"></div>
       </div>
@@ -26,7 +26,7 @@ export default {
   components: {
     ImageAttribution
   },
-  computed: mapGetters(['currentFrame', 'storyLength']),
+  computed: mapGetters(['currentFrame', 'storyLength', 'storyViewerLength']),
   methods: {
     ...mapActions(['selectFrame']),
     playNextFrame: function() {
@@ -52,12 +52,12 @@ export default {
     }
   },
   mounted: function() {
-    if (this.currentFrame.id < this.storyLength - 1) {
+    if (this.currentFrame.id < this.storyLength) {
       this.playNextFrame()
     }
   },
   updated: function() {
-    if (this.currentFrame.id < this.storyLength -1) {
+    if (this.currentFrame.id < this.storyLength) {
       this.playNextFrame()
     } else if(!this.storyEnd) {
       this.endStory()

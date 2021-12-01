@@ -2,7 +2,7 @@ import { wikiSubdomain } from '@utils/wiki'
 import { strip } from '@utils/strip'
 import { convertUrlToMobile } from '@utils/mobile'
 
-const MAX_FRAMES = 6
+const MAX_FRAMES = 5
 
 const makeFrameStyle = f => {
   return f.img ?
@@ -16,16 +16,10 @@ const makeFrameStyle = f => {
 
 export default {
   state: {
+    storyTitle: null,
     creationDate: null,
     currentFrameId: 1,
     frames: [
-      { // cover frame
-        id: 0,
-        img: null,
-        text: '',
-        imgTitle: '',
-        attribution: null
-      },
       {
         id: 1,
         img: null,
@@ -41,13 +35,13 @@ export default {
       if (state.frames.length === MAX_FRAMES) {
         return
       }
-      const newId = state.frames.length
+      const newId = state.frames.length + 1
       state.frames.push({text:'', img: '', imgTitle: '', id: newId, attribution: null})
       state.currentFrameId = newId
     },
     resetFrame: (state, array) => {
       state.currentFrameId = array.length
-      state.frames = [ state.frames[0], ...array ]
+      state.frames = array
     },
     setText: (state, text) => {
       const f = state.frames.find(f => f.id === state.currentFrameId)
@@ -68,12 +62,8 @@ export default {
     setCreationDate: (state, date) => {
       state.creationDate = date;
     },
-    updateCover: (state, title) => {
-      const f = state.frames.find(f => f.id === 0);
-      f.text = title;
-      f.imgTitle = title;
-      f.img = state.frames[1].img;
-      f.attribution = state.frames[1].attribution;
+    updateStoryTitle: (state, title) => {
+      state.storyTitle = title;
     }
   },
   actions: {
@@ -95,8 +85,8 @@ export default {
     setImgTitle: ({commit}, title) => {
       commit('setImgTitle', title)
     },
-    updateCover: ({commit}, title) => {
-      commit('updateCover', title )
+    updateStoryTitle: ({commit}, title) => {
+      commit('updateStoryTitle', title )
     },
     fetchImgAttribution: async ({commit}, image) => {
       const url = `https://${wikiSubdomain}.wikipedia.org/w/api.php?format=json&formatversion=2&origin=*&action=query&prop=imageinfo&iiextmetadatafilter=License%7CLicenseShortName%7CImageDescription%7CArtist&iiextmetadatalanguage=en&iiextmetadatamultilang=1&iiprop=url%7Cextmetadata&titles=${encodeURIComponent(image.title)}`
@@ -120,7 +110,7 @@ export default {
   },
   getters: {
     thumbnails: (state) => {
-      return state.frames.filter(f=>f.id!==0).map(f => {
+      return state.frames.map(f => {
         const newFrame = {...f}
         if (f.id === state.currentFrameId) {
           newFrame.selected = true
@@ -130,25 +120,27 @@ export default {
       })
     },
     currentFrame: (state) => {
-      const f = state.frames.find(f => f.id === state.currentFrameId)
+      const isCoverFrame = state.currentFrameId === 0;
+      const f = isCoverFrame ? state.frames[0] : state.frames.find(f => f.id === state.currentFrameId)
       return {
-        text: f.text,
+        text: isCoverFrame ? state.storyTitle : f.text,
         style: makeFrameStyle(f),
         noImage: f.img === '',
         id: state.currentFrameId,
         imgAttribution: f.attribution,
-        imgTitle: f.imgTitle
+        imgTitle: isCoverFrame ? state.storyTitle : f.imgTitle
       }
     },
     storyLength: state => state.frames.length,
+    storyViewerLength: state => state.frames.length + 1,
     storyInfo: (state) => {
       return {
+        title: state.storyTitle,
         creationDate: state.creationDate
       }
     },
     valid: (state) => {
-      const frameExceptCover = state.frames.filter( f => f.id !== 0 )
-      return frameExceptCover.length >= 2 && frameExceptCover.every( f => f.img && f.text )
+      return state.frames.length >= 2 && state.frames.every( f => f.img && f.text )
     },
     attributionData: (state) => {
       return state.frames.map(f => {
