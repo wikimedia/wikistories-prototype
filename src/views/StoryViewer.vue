@@ -40,12 +40,14 @@ export default {
     ...mapActions(['selectFrame']),
     setFrameTimeout: function(f) {
       const duration = this.frameRemaining ? this.frameRemaining : this.frameDuration
+      this.frameStarting = Date.now()
       this.currentTimeout = setTimeout( () => {
         f()
         clearTimeout(this.currentTimeout)
         this.frameRemaining = null
+        this.frameStarting = null
+        this.currentTimeout = null
       }, duration)
-      this.frameStarting = new Date()
     },
     playNextFrame: function() {
       const playNext = () => this.selectFrame(this.currentFrame.id + 1)
@@ -55,6 +57,8 @@ export default {
       this.storyEnd = false
       this.selectFrame(1)
       this.frameRemaining = null
+      this.frameStarting = null
+      this.currentTimeout = null
     },
     endStory: function() {
       const end = () => this.storyEnd = true
@@ -65,7 +69,7 @@ export default {
       return !invalidClick && !this.storyEnd
     },
     beginPause: function(e) {
-      this.frameRemaining = new Date() - this.frameStarting
+      this.frameRemaining = this.frameDuration - Math.abs(this.frameStarting - Date.now())
       if (this.isPauseAction(e)) {
         e.preventDefault()
         e.stopPropagation()
