@@ -1,8 +1,7 @@
 <template>
   <div class="progress-container">
     <div v-for="n in storyLength" :key="n" class="progress">
-      <div v-if="currentFrame.id === n" :class="{ loading: true, paused: isPaused}" :style="{ animationDuration: animationDuration }"></div>
-      <div v-else-if="currentFrame.id > n" class="loaded"></div>
+      <div :class="{ loading: currentFrame.id === n, paused: isPaused, loaded: currentFrame.id > n}" :style="{ animationDuration: animationDuration }"></div>
     </div>
   </div>
 </template>
