@@ -39,7 +39,6 @@ export default {
         f()
         this.frameRemaining = null
         this.frameStarting = null
-        this.currentTimeout = null
       }, duration)
     },
     playNextFrame: function() {
@@ -51,7 +50,6 @@ export default {
       this.selectFrame(1)
       this.frameRemaining = null
       this.frameStarting = null
-      this.currentTimeout = null
     },
     endStory: function() {
       const end = () => this.storyEnd = true
@@ -67,7 +65,6 @@ export default {
         e.preventDefault()
         e.stopPropagation()
         clearTimeout(this.currentTimeout)
-        this.currentTimeout = null
         this.isPaused = true
       }
     },
