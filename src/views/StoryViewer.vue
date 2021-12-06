@@ -1,5 +1,5 @@
 <template>
-  <div class="viewer" :style="currentFrame.style" @mousedown="handlePause" @touchstart="beginPause" @touchend="endPause">
+  <div class="viewer" :style="currentFrame.style" @mousedown="togglePause" @touchstart="beginPause" @touchend="endPause">
     <ProgressBar :isPaused="isPaused" :frameDuration="frameDuration" />
     <div class="story-text" v-if="currentFrame.text" v-html="currentFrame.text"></div>
     <ImageAttribution />
@@ -78,7 +78,7 @@ export default {
         this.isPaused = false
       }
     },
-    handlePause: function(e) {
+    togglePause: function(e) {
       if (this.isPauseAction(e)) {
         this.isPaused ? this.endPause(e) : this.beginPause(e)
       }
