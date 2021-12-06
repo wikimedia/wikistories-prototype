@@ -1,11 +1,6 @@
 <template>
   <div class="viewer" :style="currentFrame.style" @mousedown="handlePause" @touchstart="beginPause" @touchend="endPause">
-    <div class="progress-container">
-      <div v-for="n in storyLength" :key="n" class="progress">
-        <div v-if="currentFrame.id === n" :class="{ loading: true, paused: isPaused}" :style="{ animationDuration: animationDuration }"></div>
-        <div v-else-if="currentFrame.id > n" class="loaded"></div>
-      </div>
-    </div>
+    <ProgressBar :isPaused="isPaused" :frameDuration="frameDuration" />
     <div class="story-text" v-if="currentFrame.text" v-html="currentFrame.text"></div>
     <ImageAttribution />
     <div class="restart-btn" v-if="storyEnd" @click="restartStory">{{ $i18n('btn-restart-story') }}</div>
@@ -15,6 +10,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import ImageAttribution from '@components/ImageAttribution.vue'
+import ProgressBar from '@components/ProgressBar.vue'
 export default {
   name: 'StoryViewer',
   data: () => {
@@ -28,13 +24,11 @@ export default {
     }
   },
   components: {
-    ImageAttribution
+    ImageAttribution,
+    ProgressBar
   },
   computed: {
-    ...mapGetters(['currentFrame', 'storyLength']),
-    animationDuration: function () {
-      return this.frameDuration / 1000 + 's'
-    }
+    ...mapGetters(['currentFrame', 'storyLength'])
   },
   methods: {
     ...mapActions(['selectFrame']),
@@ -43,7 +37,6 @@ export default {
       this.frameStarting = Date.now()
       this.currentTimeout = setTimeout( () => {
         f()
-        clearTimeout(this.currentTimeout)
         this.frameRemaining = null
         this.frameStarting = null
         this.currentTimeout = null
@@ -140,36 +133,4 @@ export default {
     width: 90px;
     cursor: pointer;
   }
-  .progress-container {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    padding: 10px 0;
-  }
-  .progress {
-    height: 4px;
-    flex-grow: 1;
-    margin: 0 5px;
-    display: flex;
-    background-color: #C4C4C4;
-  }
-  .progress .loading {
-    height: 100%;
-    width: 100%;
-    background-color: #FFFFFF;
-    animation-name: loading;
-    animation-iteration-count: 1;
-  }
-  .progress .paused {
-    animation-play-state: paused;
-  }
-  .progress .loaded {
-    height: 100%;
-    width: 100%;
-    background-color: #FFFFFF;
-  }
-  @keyframes loading {
-  from { width: 0%; } 
-  to { width: 100%; }
-}
 </style>
