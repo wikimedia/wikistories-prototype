@@ -41,6 +41,7 @@ export default {
     background-color: #FFFFFF;
     animation-name: loading;
     animation-iteration-count: 1;
+    animation-timing-function: linear;
   }
   .progress .paused {
     animation-play-state: paused;
