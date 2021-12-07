@@ -1,7 +1,7 @@
 <template>
   <div class="viewer" :style="currentFrame.style" @mousedown="togglePause" @touchstart="beginPause" @touchend="endPause">
     <ProgressBar :isPaused="isPaused" :frameDuration="frameDuration" />
-    <div class="story-text" v-if="currentFrame.text" v-html="currentFrame.text"></div>
+    <div :class="{'story-text': true, 'cover': currentFrame.id === 0}" v-if="currentFrame.text" v-html="currentFrame.text"></div>
     <ImageAttribution />
     <div class="restart-btn" v-if="storyEnd" @click="restartStory">{{ $i18n('btn-restart-story') }}</div>
   </div>
@@ -27,9 +27,7 @@ export default {
     ImageAttribution,
     ProgressBar
   },
-  computed: {
-    ...mapGetters(['currentFrame', 'storyLength'])
-  },
+  computed: mapGetters(['currentFrame', 'storyLength']),
   methods: {
     ...mapActions(['selectFrame']),
     setFrameTimeout: function(f) {
@@ -47,7 +45,7 @@ export default {
     },
     restartStory: function() {
       this.storyEnd = false
-      this.selectFrame(1)
+      this.selectFrame(0)
       this.frameRemaining = null
       this.frameStarting = null
     },
@@ -82,7 +80,7 @@ export default {
     }
   },
   beforeMount: function() {
-    if (this.currentFrame.id > 1) {
+    if (this.currentFrame.id > 0) {
       this.restartStory()
     }
   },
@@ -117,6 +115,18 @@ export default {
     background-color: white;
     margin: 0;
     padding: 10px;
+  }
+  .story-text.cover {
+    font-size: 32px;
+    line-height: 36px;
+    bottom: 72px;
+    color: #fff;
+    background-color: unset;
+    padding: unset;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
   }
   .restart-btn {
     position: absolute;

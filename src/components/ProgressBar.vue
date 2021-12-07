@@ -1,7 +1,7 @@
 <template>
   <div class="progress-container">
-    <div v-for="n in storyLength" :key="n" class="progress">
-      <div :class="{ loading: currentFrame.id === n, paused: isPaused, loaded: currentFrame.id > n}" :style="{ animationDuration: animationDuration }"></div>
+    <div v-for="n in storyViewerLength" :key="n" class="progress">
+      <div :class="{ loading: currentFrame.id === n - 1, paused: isPaused, loaded: currentFrame.id > n - 1}" :style="{ animationDuration: animationDuration }"></div>
     </div>
   </div>
 </template>
@@ -13,7 +13,7 @@ export default {
   name: 'ProgressBar',
   props: ['frameDuration','isPaused'],
   computed: {
-    ...mapGetters(['currentFrame', 'storyLength']),
+    ...mapGetters(['currentFrame', 'storyLength', 'storyViewerLength']),
     animationDuration: function () {
       return this.frameDuration / 1000 + 's'
     }

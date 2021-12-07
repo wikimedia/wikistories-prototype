@@ -12,6 +12,8 @@ export default {
   'btn-clear': '移除',
   'btn-select-image': '選擇圖片',
   'btn-next': '下一步',
+  'publish-edit-title-placeholder': '為你的 Story 取一個標題',
+  'publish-edit-error-msg': '輸入 Story 標題',
   'publish-date': '日期',
   'publish-tags': '標簽',
   'publish-language': '語言',
