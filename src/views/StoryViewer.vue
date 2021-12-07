@@ -1,12 +1,12 @@
 <template>
   <div class="viewer" :style="currentFrame.style">
     <div class="progress-container">
-      <div v-for="n in storyLength" :key="n" class="progress">
-        <div v-if="currentFrame.id === n" class="loading"></div>
-        <div v-else-if="currentFrame.id > n" class="loaded"></div>
+      <div v-for="n in storyViewerLength" :key="n" class="progress">
+        <div v-if="currentFrame.id === ( n - 1 )" class="loading"></div>
+        <div v-else-if="currentFrame.id > ( n - 1 )" class="loaded"></div>
       </div>
     </div>
-    <div class="story-text" v-if="currentFrame.text" v-html="currentFrame.text"></div>
+    <div :class="{'story-text': true, 'cover': currentFrame.id === 0}" v-if="currentFrame.text" v-html="currentFrame.text"></div>
     <ImageAttribution />
     <div class="restart-btn" v-if="storyEnd" @click="restartStory">{{ $i18n('btn-restart-story') }}</div>
   </div>
@@ -26,7 +26,7 @@ export default {
   components: {
     ImageAttribution
   },
-  computed: mapGetters(['currentFrame', 'storyLength']),
+  computed: mapGetters(['currentFrame', 'storyLength', 'storyViewerLength']),
   methods: {
     ...mapActions(['selectFrame']),
     playNextFrame: function() {
@@ -37,7 +37,7 @@ export default {
     },
     restartStory: function() {
       this.storyEnd = false
-      this.selectFrame(1)
+      this.selectFrame(0)
     },
     endStory: function() {
       const timeoutId = setTimeout( ()=> {
@@ -47,7 +47,7 @@ export default {
     }
   },
   beforeMount: function() {
-    if (this.currentFrame.id > 1) {
+    if (this.currentFrame.id > 0) {
       this.restartStory()
     }
   },
@@ -82,6 +82,18 @@ export default {
     background-color: white;
     margin: 0;
     padding: 10px;
+  }
+  .story-text.cover {
+    font-size: 32px;
+    line-height: 36px;
+    bottom: 72px;
+    color: #fff;
+    background-color: unset;
+    padding: unset;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
   }
   .restart-btn {
     position: absolute;
