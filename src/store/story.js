@@ -16,7 +16,7 @@ const makeFrameStyle = f => {
 
 export default {
   state: {
-    storyTitle: '', // @todo to be edited by user
+    storyTitle: null,
     creationDate: null,
     currentFrameId: 1,
     frames: [
@@ -61,6 +61,9 @@ export default {
     },
     setCreationDate: (state, date) => {
       state.creationDate = date;
+    },
+    updateStoryTitle: (state, title) => {
+      state.storyTitle = title;
     }
   },
   actions: {
@@ -81,6 +84,9 @@ export default {
     },
     setImgTitle: ({commit}, title) => {
       commit('setImgTitle', title)
+    },
+    updateStoryTitle: ({commit}, title) => {
+      commit('updateStoryTitle', title )
     },
     fetchImgAttribution: async ({commit}, image) => {
       const url = `https://${wikiSubdomain}.wikipedia.org/w/api.php?format=json&formatversion=2&origin=*&action=query&prop=imageinfo&iiextmetadatafilter=License%7CLicenseShortName%7CImageDescription%7CArtist&iiextmetadatalanguage=en&iiextmetadatamultilang=1&iiprop=url%7Cextmetadata&titles=${encodeURIComponent(image.title)}`
@@ -114,20 +120,22 @@ export default {
       })
     },
     currentFrame: (state) => {
-      const f = state.frames.find(f => f.id === state.currentFrameId)
+      const isCoverFrame = state.currentFrameId === 0;
+      const f = isCoverFrame ? state.frames[0] : state.frames.find(f => f.id === state.currentFrameId)
       return {
-        text: f.text,
+        text: isCoverFrame ? state.storyTitle : f.text,
         style: makeFrameStyle(f),
         noImage: f.img === '',
         id: state.currentFrameId,
         imgAttribution: f.attribution,
-        imgTitle: f.imgTitle
+        imgTitle: isCoverFrame ? state.storyTitle : f.imgTitle
       }
     },
     storyLength: state => state.frames.length,
+    storyViewerLength: state => state.frames.length + 1,
     storyInfo: (state) => {
       return {
-        title: state.frames[0].text, // @todo to be edited by user
+        title: state.storyTitle,
         creationDate: state.creationDate
       }
     },

@@ -12,6 +12,8 @@ export default {
   'btn-clear': 'Clear',
   'btn-select-image': 'Select an image',
   'btn-next': 'Next',
+  'publish-edit-title-placeholder': 'Give your story a title',
+  'publish-edit-error-msg': 'Enter story title',
   'publish-date': 'Date',
   'publish-tags': 'Tags',
   'publish-language': 'Language',
