@@ -3,7 +3,7 @@ export default {
   'btn-create': 'Crea una historia',
   'btn-restart-story': 'Empezar de nuevo',
   'search-box': 'Buscar en Wikipedia',
-  'search-media': 'Buscar en Commons',
+  'search-media': 'Buscar imagenes',
   'search-media-info': '$1 seleccionado',
   'wikimedia-commons': 'Commons',
   'wikipedia': 'Wikipedia',

@@ -7,7 +7,7 @@
                 :class="{'selected-frame': frame.selected}"
                 :style="frame.style"
                 @click="selectFrame(frame.id)" />
-        <div class="frame btn-add-frame" @click="addFrame">+</div>
+        <router-link to="/searchcommons" class="frame btn-add-frame">+</router-link>
     </div>
 </template>
 <script>
@@ -47,6 +47,8 @@
         vertical-align: middle;
         margin-left: auto;
         margin-right: 15px;
+        text-decoration: none;
+        color: black;
     }
     .selected-frame {
         outline: #3366CC auto 4px;
