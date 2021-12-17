@@ -20,3 +20,20 @@ export const request = ( url, callback ) => {
 
 	abortFunctions.push( xhr );
 };
+
+export const parallelRequests = (urls, callbacks) => {
+	abortAllRequest();
+	
+	for (let i = 0; i < urls.length; i++) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", urls[i]);
+		xhr.addEventListener('readystatechange', () => {
+        if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+            const data = JSON.parse(xhr.responseText);
+						callbacks[i](data)
+        }
+    });
+    xhr.send();
+		abortFunctions.push( xhr );
+	}
+}
