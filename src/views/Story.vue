@@ -39,11 +39,12 @@ export default {
     }
   },
   mounted: function() {
-    const attributionNeeded = this.attributionData.find(e => e.title !== '' && !e.attribution)
-
-    if ( attributionNeeded ) {
-      this.fetchImgAttribution({ id: attributionNeeded.id, title: attributionNeeded.title } )
-    }
+    this.attributionData.forEach(frame => {
+      const attributionNeeded = frame.title !== '' && !frame.attribution
+      if ( attributionNeeded ) {
+        this.fetchImgAttribution({ id: frame.id, title: frame.title } )
+      }
+    })
   }
 }
 </script>
