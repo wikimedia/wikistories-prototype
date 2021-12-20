@@ -140,7 +140,7 @@ export default {
       }
     },
     valid: (state) => {
-      return state.frames.length >= 2 && state.frames.every( f => f.img && f.text )
+      return state.frames.length >= 2 && state.frames.every( f => f.img )
     },
     attributionData: (state) => {
       return state.frames.map(f => {
