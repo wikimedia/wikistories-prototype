@@ -33,7 +33,7 @@ export const parallelRequests = (urls, callbacks) => {
 						callbacks[i](data)
         }
     });
-    xhr.send();
+		xhr.send();
 		abortFunctions.push( xhr );
 	}
-}
+};
