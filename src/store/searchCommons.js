@@ -22,7 +22,8 @@ export default {
   actions: {
     search: ({ commit }, query) => {
       const queryString = query.trim();
-      const url = `https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&uselang=${lang}&generator=search&gsrsearch=filetype%3Abitmap%7Cdrawing%20${queryString}&gsrlimit=40&gsroffset=0&gsrinfo=totalhits%7Csuggestion&gsrprop=snippet&prop=imageinfo&gsrnamespace=6&iiprop=url%7Cextmetadata&iiurlheight=180&iiextmetadatafilter=License%7CLicenseShortName%7CImageDescription%7CArtist&iiextmetadatalanguage=${lang}`
+      const commonsLimit = 40
+      const url = `https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&uselang=${lang}&generator=search&gsrsearch=filetype%3Abitmap%7Cdrawing%20${queryString}&gsrlimit=${commonsLimit}&gsroffset=0&gsrinfo=totalhits%7Csuggestion&gsrprop=snippet&prop=imageinfo&gsrnamespace=6&iiprop=url%7Cextmetadata&iiurlheight=180&iiextmetadatafilter=License%7CLicenseShortName%7CImageDescription%7CArtist&iiextmetadatalanguage=${lang}`
       const wikipediaUrl = `https://${lang}.wikipedia.org/api/rest_v1/page/media-list/${encodeURIComponent( queryString )}`
 
       commit('setQuery', query)
@@ -73,7 +74,7 @@ export default {
       const wikipediaCallback = (data) => {
         const wikipediaResults = data.items.reduce((mediaArray, item, i)=>{
           if ( item.showInGallery && item.type === 'image' ) {
-            const withBuffer = i + 100
+            const withBuffer = i + commonsLimit;
             return mediaArray.concat({
               id: withBuffer.toString(),
               title: item.title,
@@ -84,10 +85,10 @@ export default {
           return mediaArray
         },[])
         
-        commit('setResults', wikipediaResults)
+        commit('setResults', wikipediaResults);
       }
-
-      parallelRequests([url, wikipediaUrl], [commonsCallback, wikipediaCallback])      
+      
+      parallelRequests([url, wikipediaUrl], [commonsCallback, wikipediaCallback]);
     },
     clear: ({commit}) => {
       abortAllRequest();
