@@ -3,7 +3,7 @@ export default {
   'btn-create': '創建故事',
   'btn-restart-story': '重新開始',
   'search-box': '搜尋維基百科',
-  'search-media': '搜索图片',
+  'search-media': '搜尋圖片',
   'search-media-info': '$1 選擇',
   'wikimedia-commons': '維基共享資源',
   'wikipedia': '維基百科',
