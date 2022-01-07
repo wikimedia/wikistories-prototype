@@ -3,7 +3,7 @@ export default {
   'btn-create': 'Buat cerita',
   'btn-restart-story': 'mulai dari awal',
   'search-box': 'Cari di wikipedia',
-  'search-media': 'Cari media',
+  'search-media': 'Cari gambar',
   'search-media-info': '$1 dipilih',
   'wikimedia-commons': 'Commons',
   'wikipedia': 'Wikipedia',
