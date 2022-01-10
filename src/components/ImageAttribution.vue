@@ -42,6 +42,7 @@ export default {
     border: #f8f9fa;
     display: flex;
     justify-content: space-between;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
   }
   .image-attribution-info {
     display: flex;
